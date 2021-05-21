@@ -13,6 +13,23 @@
 		0499DA1B265805B3005E5A0F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0499DA1A265805B3005E5A0F /* Assets.xcassets */; };
 		0499DA1E265805B3005E5A0F /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0499DA1D265805B3005E5A0F /* Preview Assets.xcassets */; };
 		0499DA21265805B3005E5A0F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0499DA1F265805B3005E5A0F /* LaunchScreen.storyboard */; };
+		0499DA3326580CAD005E5A0F /* EmptyFonts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0499DA3226580CAD005E5A0F /* EmptyFonts.swift */; };
+		0499DA4226580D30005E5A0F /* EmptyModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0499DA4126580D30005E5A0F /* EmptyModels.swift */; };
+		0499DA4526580D3C005E5A0F /* EmptyTranslator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0499DA4426580D3C005E5A0F /* EmptyTranslator.swift */; };
+		0499DA4826580D45005E5A0F /* EmptyUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0499DA4726580D45005E5A0F /* EmptyUseCase.swift */; };
+		0499DA4B26580D50005E5A0F /* EmptyEntities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0499DA4A26580D50005E5A0F /* EmptyEntities.swift */; };
+		0499DA5626580E5F005E5A0F /* EmptyService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0499DA5526580E5F005E5A0F /* EmptyService.swift */; };
+		0499DA5A26580E74005E5A0F /* EmptyRealm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0499DA5926580E74005E5A0F /* EmptyRealm.swift */; };
+		0499DA5E26580E83005E5A0F /* EmptyRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0499DA5D26580E83005E5A0F /* EmptyRepository.swift */; };
+		0499DA6126580EB2005E5A0F /* ApplicationNavigator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0499DA6026580EB2005E5A0F /* ApplicationNavigator.swift */; };
+		0499DA6426580ED8005E5A0F /* EmptyComponents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0499DA6326580ED8005E5A0F /* EmptyComponents.swift */; };
+		0499DA6826580F9A005E5A0F /* MainTabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0499DA6726580F9A005E5A0F /* MainTabBarViewController.swift */; };
+		0499DA722658103E005E5A0F /* EmptyUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0499DA712658103E005E5A0F /* EmptyUtils.swift */; };
+		0499DA762658104A005E5A0F /* EmptyProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0499DA7526581049005E5A0F /* EmptyProtocols.swift */; };
+		0499DA7926581056005E5A0F /* EmptyManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0499DA7826581056005E5A0F /* EmptyManager.swift */; };
+		0499DA7C26581060005E5A0F /* EmptyExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0499DA7B26581060005E5A0F /* EmptyExtension.swift */; };
+		0499DA7F2658106D005E5A0F /* GlobalStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0499DA7E2658106D005E5A0F /* GlobalStore.swift */; };
+		0499DA822658107D005E5A0F /* BaseCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0499DA812658107D005E5A0F /* BaseCollectionViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +41,23 @@
 		0499DA1D265805B3005E5A0F /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		0499DA20265805B3005E5A0F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		0499DA22265805B3005E5A0F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		0499DA3226580CAD005E5A0F /* EmptyFonts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyFonts.swift; sourceTree = "<group>"; };
+		0499DA4126580D30005E5A0F /* EmptyModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyModels.swift; sourceTree = "<group>"; };
+		0499DA4426580D3C005E5A0F /* EmptyTranslator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyTranslator.swift; sourceTree = "<group>"; };
+		0499DA4726580D45005E5A0F /* EmptyUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyUseCase.swift; sourceTree = "<group>"; };
+		0499DA4A26580D50005E5A0F /* EmptyEntities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyEntities.swift; sourceTree = "<group>"; };
+		0499DA5526580E5F005E5A0F /* EmptyService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyService.swift; sourceTree = "<group>"; };
+		0499DA5926580E74005E5A0F /* EmptyRealm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyRealm.swift; sourceTree = "<group>"; };
+		0499DA5D26580E83005E5A0F /* EmptyRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyRepository.swift; sourceTree = "<group>"; };
+		0499DA6026580EB2005E5A0F /* ApplicationNavigator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplicationNavigator.swift; sourceTree = "<group>"; };
+		0499DA6326580ED8005E5A0F /* EmptyComponents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyComponents.swift; sourceTree = "<group>"; };
+		0499DA6726580F9A005E5A0F /* MainTabBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabBarViewController.swift; sourceTree = "<group>"; };
+		0499DA712658103E005E5A0F /* EmptyUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyUtils.swift; sourceTree = "<group>"; };
+		0499DA7526581049005E5A0F /* EmptyProtocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyProtocols.swift; sourceTree = "<group>"; };
+		0499DA7826581056005E5A0F /* EmptyManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyManager.swift; sourceTree = "<group>"; };
+		0499DA7B26581060005E5A0F /* EmptyExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyExtension.swift; sourceTree = "<group>"; };
+		0499DA7E2658106D005E5A0F /* GlobalStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalStore.swift; sourceTree = "<group>"; };
+		0499DA812658107D005E5A0F /* BaseCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseCollectionViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,12 +90,9 @@
 		0499DA13265805B1005E5A0F /* Gilbert */ = {
 			isa = PBXGroup;
 			children = (
-				0499DA14265805B1005E5A0F /* AppDelegate.swift */,
-				0499DA16265805B1005E5A0F /* SceneDelegate.swift */,
+				0499DA29265807EC005E5A0F /* Resources */,
+				0499DA2A265807F1005E5A0F /* Sources */,
 				0499DA18265805B1005E5A0F /* ContentView.swift */,
-				0499DA1A265805B3005E5A0F /* Assets.xcassets */,
-				0499DA1F265805B3005E5A0F /* LaunchScreen.storyboard */,
-				0499DA22265805B3005E5A0F /* Info.plist */,
 				0499DA1C265805B3005E5A0F /* Preview Content */,
 			);
 			path = Gilbert;
@@ -73,6 +104,250 @@
 				0499DA1D265805B3005E5A0F /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		0499DA29265807EC005E5A0F /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				0499DA31265809A5005E5A0F /* Fonts */,
+				0499DA3626580CBD005E5A0F /* Assets */,
+				0499DA2F265808BF005E5A0F /* SupportingFiles */,
+				0499DA1F265805B3005E5A0F /* LaunchScreen.storyboard */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		0499DA2A265807F1005E5A0F /* Sources */ = {
+			isa = PBXGroup;
+			children = (
+				0499DA2B26580880005E5A0F /* Application */,
+				0499DA2C26580887005E5A0F /* Domain */,
+				0499DA2D2658088E005E5A0F /* Platform */,
+				0499DA2E26580897005E5A0F /* Presentation */,
+			);
+			path = Sources;
+			sourceTree = "<group>";
+		};
+		0499DA2B26580880005E5A0F /* Application */ = {
+			isa = PBXGroup;
+			children = (
+				0499DA14265805B1005E5A0F /* AppDelegate.swift */,
+				0499DA16265805B1005E5A0F /* SceneDelegate.swift */,
+				0499DA7026581026005E5A0F /* Utils */,
+				0499DA6F26581021005E5A0F /* Protocols */,
+				0499DA6E2658101C005E5A0F /* Managers */,
+				0499DA6D26581015005E5A0F /* Extensions */,
+				0499DA6C2658100F005E5A0F /* Constants */,
+				0499DA6B2658100B005E5A0F /* Base */,
+			);
+			path = Application;
+			sourceTree = "<group>";
+		};
+		0499DA2C26580887005E5A0F /* Domain */ = {
+			isa = PBXGroup;
+			children = (
+				0499DA3F26580D12005E5A0F /* UseCases */,
+				0499DA3E26580D0C005E5A0F /* Translators */,
+				0499DA3D26580D08005E5A0F /* Models */,
+				0499DA3C26580D02005E5A0F /* Entities */,
+			);
+			path = Domain;
+			sourceTree = "<group>";
+		};
+		0499DA2D2658088E005E5A0F /* Platform */ = {
+			isa = PBXGroup;
+			children = (
+				0499DA4D26580D69005E5A0F /* DataSources */,
+				0499DA5026580E0B005E5A0F /* Repositories */,
+			);
+			path = Platform;
+			sourceTree = "<group>";
+		};
+		0499DA2E26580897005E5A0F /* Presentation */ = {
+			isa = PBXGroup;
+			children = (
+				0499DA5126580E18005E5A0F /* Navigator */,
+				0499DA5226580E1D005E5A0F /* Components */,
+				0499DA5326580E24005E5A0F /* Scenes */,
+			);
+			path = Presentation;
+			sourceTree = "<group>";
+		};
+		0499DA2F265808BF005E5A0F /* SupportingFiles */ = {
+			isa = PBXGroup;
+			children = (
+				0499DA22265805B3005E5A0F /* Info.plist */,
+			);
+			path = SupportingFiles;
+			sourceTree = "<group>";
+		};
+		0499DA31265809A5005E5A0F /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				0499DA3226580CAD005E5A0F /* EmptyFonts.swift */,
+			);
+			path = Fonts;
+			sourceTree = "<group>";
+		};
+		0499DA3626580CBD005E5A0F /* Assets */ = {
+			isa = PBXGroup;
+			children = (
+				0499DA1A265805B3005E5A0F /* Assets.xcassets */,
+			);
+			path = Assets;
+			sourceTree = "<group>";
+		};
+		0499DA3C26580D02005E5A0F /* Entities */ = {
+			isa = PBXGroup;
+			children = (
+				0499DA4A26580D50005E5A0F /* EmptyEntities.swift */,
+			);
+			path = Entities;
+			sourceTree = "<group>";
+		};
+		0499DA3D26580D08005E5A0F /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				0499DA4126580D30005E5A0F /* EmptyModels.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		0499DA3E26580D0C005E5A0F /* Translators */ = {
+			isa = PBXGroup;
+			children = (
+				0499DA4426580D3C005E5A0F /* EmptyTranslator.swift */,
+			);
+			path = Translators;
+			sourceTree = "<group>";
+		};
+		0499DA3F26580D12005E5A0F /* UseCases */ = {
+			isa = PBXGroup;
+			children = (
+				0499DA4726580D45005E5A0F /* EmptyUseCase.swift */,
+			);
+			path = UseCases;
+			sourceTree = "<group>";
+		};
+		0499DA4D26580D69005E5A0F /* DataSources */ = {
+			isa = PBXGroup;
+			children = (
+				0499DA4E26580D72005E5A0F /* Network */,
+				0499DA4F26580D76005E5A0F /* PersistantStorages */,
+			);
+			path = DataSources;
+			sourceTree = "<group>";
+		};
+		0499DA4E26580D72005E5A0F /* Network */ = {
+			isa = PBXGroup;
+			children = (
+				0499DA5426580E52005E5A0F /* Services */,
+			);
+			path = Network;
+			sourceTree = "<group>";
+		};
+		0499DA4F26580D76005E5A0F /* PersistantStorages */ = {
+			isa = PBXGroup;
+			children = (
+				0499DA5926580E74005E5A0F /* EmptyRealm.swift */,
+			);
+			path = PersistantStorages;
+			sourceTree = "<group>";
+		};
+		0499DA5026580E0B005E5A0F /* Repositories */ = {
+			isa = PBXGroup;
+			children = (
+				0499DA5D26580E83005E5A0F /* EmptyRepository.swift */,
+			);
+			path = Repositories;
+			sourceTree = "<group>";
+		};
+		0499DA5126580E18005E5A0F /* Navigator */ = {
+			isa = PBXGroup;
+			children = (
+				0499DA6026580EB2005E5A0F /* ApplicationNavigator.swift */,
+			);
+			path = Navigator;
+			sourceTree = "<group>";
+		};
+		0499DA5226580E1D005E5A0F /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				0499DA6326580ED8005E5A0F /* EmptyComponents.swift */,
+			);
+			path = Components;
+			sourceTree = "<group>";
+		};
+		0499DA5326580E24005E5A0F /* Scenes */ = {
+			isa = PBXGroup;
+			children = (
+				0499DA6626580F6E005E5A0F /* MainTabBar */,
+			);
+			path = Scenes;
+			sourceTree = "<group>";
+		};
+		0499DA5426580E52005E5A0F /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				0499DA5526580E5F005E5A0F /* EmptyService.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		0499DA6626580F6E005E5A0F /* MainTabBar */ = {
+			isa = PBXGroup;
+			children = (
+				0499DA6726580F9A005E5A0F /* MainTabBarViewController.swift */,
+			);
+			path = MainTabBar;
+			sourceTree = "<group>";
+		};
+		0499DA6B2658100B005E5A0F /* Base */ = {
+			isa = PBXGroup;
+			children = (
+				0499DA812658107D005E5A0F /* BaseCollectionViewCell.swift */,
+			);
+			path = Base;
+			sourceTree = "<group>";
+		};
+		0499DA6C2658100F005E5A0F /* Constants */ = {
+			isa = PBXGroup;
+			children = (
+				0499DA7E2658106D005E5A0F /* GlobalStore.swift */,
+			);
+			path = Constants;
+			sourceTree = "<group>";
+		};
+		0499DA6D26581015005E5A0F /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				0499DA7B26581060005E5A0F /* EmptyExtension.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		0499DA6E2658101C005E5A0F /* Managers */ = {
+			isa = PBXGroup;
+			children = (
+				0499DA7826581056005E5A0F /* EmptyManager.swift */,
+			);
+			path = Managers;
+			sourceTree = "<group>";
+		};
+		0499DA6F26581021005E5A0F /* Protocols */ = {
+			isa = PBXGroup;
+			children = (
+				0499DA7526581049005E5A0F /* EmptyProtocols.swift */,
+			);
+			path = Protocols;
+			sourceTree = "<group>";
+		};
+		0499DA7026581026005E5A0F /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				0499DA712658103E005E5A0F /* EmptyUtils.swift */,
+			);
+			path = Utils;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -145,8 +420,25 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0499DA3326580CAD005E5A0F /* EmptyFonts.swift in Sources */,
 				0499DA15265805B1005E5A0F /* AppDelegate.swift in Sources */,
+				0499DA4B26580D50005E5A0F /* EmptyEntities.swift in Sources */,
+				0499DA762658104A005E5A0F /* EmptyProtocols.swift in Sources */,
+				0499DA722658103E005E5A0F /* EmptyUtils.swift in Sources */,
+				0499DA822658107D005E5A0F /* BaseCollectionViewCell.swift in Sources */,
+				0499DA6826580F9A005E5A0F /* MainTabBarViewController.swift in Sources */,
+				0499DA4226580D30005E5A0F /* EmptyModels.swift in Sources */,
+				0499DA7C26581060005E5A0F /* EmptyExtension.swift in Sources */,
+				0499DA6126580EB2005E5A0F /* ApplicationNavigator.swift in Sources */,
+				0499DA5626580E5F005E5A0F /* EmptyService.swift in Sources */,
+				0499DA5A26580E74005E5A0F /* EmptyRealm.swift in Sources */,
+				0499DA4526580D3C005E5A0F /* EmptyTranslator.swift in Sources */,
+				0499DA4826580D45005E5A0F /* EmptyUseCase.swift in Sources */,
 				0499DA17265805B1005E5A0F /* SceneDelegate.swift in Sources */,
+				0499DA7926581056005E5A0F /* EmptyManager.swift in Sources */,
+				0499DA5E26580E83005E5A0F /* EmptyRepository.swift in Sources */,
+				0499DA6426580ED8005E5A0F /* EmptyComponents.swift in Sources */,
+				0499DA7F2658106D005E5A0F /* GlobalStore.swift in Sources */,
 				0499DA19265805B1005E5A0F /* ContentView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
