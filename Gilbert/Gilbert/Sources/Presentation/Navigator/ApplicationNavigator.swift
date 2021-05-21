@@ -19,8 +19,13 @@ final class ApplicationNavigator {
   
   func setupRoot(window: UIWindow, state: RootState) {
     var rootViewController: UIViewController
-    
-    //window.rootViewController = rootViewController
+    switch state {
+    case.login:
+      rootViewController = MainTabBarViewController()
+    case .logout:
+      rootViewController = LoginViewController()
+    }
+    window.rootViewController = rootViewController
     window.makeKeyAndVisible()
   }
 }
