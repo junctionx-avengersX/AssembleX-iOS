@@ -6,8 +6,12 @@
 //
 
 import UIKit
+import NMapsMap
 
-class HomeMapViewController: UIViewController {
+class HomeMapViewController: BaseViewController {
+  
+  let naverMapView = NMFNaverMapView()
+          
   
   // MARK: - Properties
   
@@ -17,7 +21,7 @@ class HomeMapViewController: UIViewController {
   
   init(viewModel: HomeMapViewModel) {
     self.viewModel = viewModel
-    super.init(nibName: nil, bundle: nil)
+    super.init()
   }
   
   required init?(coder: NSCoder) {
@@ -27,5 +31,13 @@ class HomeMapViewController: UIViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
     view.backgroundColor = .blue
+    
+    view.addSubview(naverMapView)
+  }
+  
+  override func setupConstraints() {
+    naverMapView.snp.makeConstraints {
+      $0.bottom.left.right.top.equalTo(self.view)
+    }
   }
 }
