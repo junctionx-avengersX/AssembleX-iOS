@@ -11,7 +11,6 @@ import NMapsMap
 class HomeMapViewController: BaseViewController {
   
   let naverMapView = NMFNaverMapView()
-          
   
   // MARK: - Properties
   
