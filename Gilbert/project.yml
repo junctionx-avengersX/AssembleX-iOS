@@ -1,0 +1,16 @@
+name: Gilbert
+include:
+  - Package.yml
+  - Gilbert.yml
+configs:
+  debug: debug
+  release: release
+options:
+   deploymentTarget:
+     iOS: 14.4
+   createIntermediateGroups: true
+schemes:
+  Gilbert:
+    build:
+      targets:
+        Gilbert: all

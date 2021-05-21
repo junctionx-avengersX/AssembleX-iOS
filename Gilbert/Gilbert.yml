@@ -1,0 +1,19 @@
+targets: 
+  Gilbert:
+    platform: iOS
+    type: application
+    settings:
+      base:
+       SWIFT_VERSION: 5.2
+       INFOPLIST_FILE: Gilbert/Resources/SupportingFiles/Info.plist
+       PRODUCT_BUNDLE_IDENTIFIER: com.junctionx2021.assemblex.Gilbert
+    sources:
+      - Gilbert
+    dependencies:
+      - package: SnapKit
+      - package: Moya
+      - package: Then
+      - package: RxSwift
+      - package: RxDataSources
+      - package: Kingfisher
+      - package: RxMoya

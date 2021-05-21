@@ -1,0 +1,23 @@
+packages: 
+  SnapKit:
+    url: https://github.com/SnapKit/SnapKit.git
+    from: 5.0.1
+  Moya:
+    url: https://github.com/Moya/Moya.git
+    from: 14.0.0
+  Then: 
+    url: https://github.com/devxoul/Then.git
+    from: 2.7.0
+  RxSwift:
+    url: https://github.com/ReactiveX/RxSwift.git
+    from: 5.1.1
+  RxDataSources:
+    url: https://github.com/RxSwiftCommunity/RxDataSources.git
+    from: 4.0.1
+  Kingfisher:
+    url: https://github.com/onevcat/Kingfisher.git
+    from: 5.15.6
+  RxMoya:
+    url: https://github.com/Moya/Moya.git
+    from: 14.0.0
+    
