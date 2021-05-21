@@ -582,7 +582,7 @@
 				DEVELOPMENT_ASSET_PATHS = "\"Gilbert/Preview Content\"";
 				DEVELOPMENT_TEAM = MECEG8BQQX;
 				ENABLE_PREVIEWS = YES;
-				INFOPLIST_FILE = Gilbert/Info.plist;
+				INFOPLIST_FILE = Gilbert/Resources/SupportingFiles/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -603,7 +603,7 @@
 				DEVELOPMENT_ASSET_PATHS = "\"Gilbert/Preview Content\"";
 				DEVELOPMENT_TEAM = MECEG8BQQX;
 				ENABLE_PREVIEWS = YES;
-				INFOPLIST_FILE = Gilbert/Info.plist;
+				INFOPLIST_FILE = Gilbert/Resources/SupportingFiles/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
