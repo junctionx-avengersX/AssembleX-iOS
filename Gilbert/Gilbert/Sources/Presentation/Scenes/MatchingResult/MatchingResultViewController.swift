@@ -91,7 +91,7 @@ extension MatchingResultViewController {
       $0.backgroundColor = UIColor(rgb: "#6b6b6b")
     }
     
-    let cardView = GilbertDetailInfoCardView().then {
+    let cardView = ResultCardView().then {
       $0.configure(gilbertInfo: gilbertInfo)
     }
     
