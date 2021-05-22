@@ -9,7 +9,7 @@ import Foundation
 
 import Moya
 
-enum transportationType: String {
+enum TransportationType: String {
   case bus = "[BUS]"
 }
 

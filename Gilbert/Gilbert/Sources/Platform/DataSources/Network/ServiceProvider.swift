@@ -9,8 +9,12 @@ import Foundation
 
 protocol ServicesProviderType: AnyObject {
   var drivingService: DrivingService { get }
+  
+  var gilbertListService: GilbertListService { get }
 }
 
 final class ServiceProvider: ServicesProviderType {
   lazy var drivingService: DrivingService = DrivingService(networking: Networking())
+  
+  lazy var gilbertListService = GilbertListService(networking: Networking())
 }
