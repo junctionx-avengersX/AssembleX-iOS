@@ -7,6 +7,8 @@
 
 import UIKit
 
+import RxDataSources
+
 class GilbertListViewController: BaseViewController {
   
   private let viewModel: GilbertListViewModel
@@ -66,11 +68,58 @@ class GilbertListViewController: BaseViewController {
       
     }
   }
+  
+  private func buildDataSource() -> RxCollectionViewSectionedAnimatedDataSource<GilbertListSectionModel> {
+    return RxCollectionViewSectionedAnimatedDataSource<GilbertListSectionModel> { _, collectionView, indexPath, cellData -> UICollectionViewCell in
+      guard let
+            cell = collectionView.dequeueReusableCell(
+              indexPath: indexPath,
+              cell: GilbertInfoCell.self
+            ) else {
+        return UICollectionViewCell()
+      }
+      
+      return cell
+    } configureSupplementaryView: { sectionModel, collectionView, kind, indexPath -> UICollectionReusableView in
+      switch kind {
+      case UICollectionView.elementKindSectionHeader:
+        guard let header = collectionView.dequeueReusableView(
+          view: GilbertListHeaderView.self,
+          kind: kind,
+          indexPath: indexPath
+        ) else {
+          fatalError("Dequeing reusable view is failed")
+        }
+        
+        return header
+      default:
+        return UICollectionReusableView()
+      }
+    }
+  }
 }
 
 // MARK: - SetupUI
 extension GilbertListViewController {
   private func setupUI() {
     view.addSubview(collectionView)
+    collectionView.rx.setDelegate(self).disposed(by: disposeBag)
+  }
+}
+
+extension GilbertListViewController: UICollectionViewDelegateFlowLayout {
+  func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+    return CGSize(width: UIScreen.main.bounds.width, height: 144)
+  }
+  
+  func collectionView(
+    _ collectionView: UICollectionView,
+    layout collectionViewLayout: UICollectionViewLayout,
+    referenceSizeForHeaderInSection section: Int
+  ) -> CGSize {
+    return CGSize(
+      width: UIScreen.main.bounds.width,
+      height: 64
+    )
   }
 }

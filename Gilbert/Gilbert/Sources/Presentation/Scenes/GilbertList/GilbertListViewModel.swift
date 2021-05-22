@@ -24,14 +24,20 @@ class GilbertListViewModel {
 
 extension GilbertListViewModel {
   struct Input {
-    
+    let initialTrigger: Observable<Void>
   }
   
   struct Output {
-    
+    let receivedGilbertList: Observable<[Gilbert]>
   }
   
   func transform(input: Input) -> Output {
-    Output()
+    let receivedGilbertList = input.initialTrigger.flatMapLatest { [weak self] _ -> Observable<[Gilbert]> in
+      guard let this = self else { return Observable.empty() }
+      return this.provider.gilbertListService.fetchGilbertList(base: "ddd", destination: "dddd", transportations: TransportationType.bus.rawValue)
+        .asObservable()
+    }
+    
+    return Output(receivedGilbertList: receivedGilbertList)
   }
 }
