@@ -20,4 +20,6 @@ packages:
   RxMoya:
     url: https://github.com/Moya/Moya.git
     from: 14.0.0
-    
+  ReactorKit:
+    url: https://github.com/ReactorKit/ReactorKit.git
+    from: 2.1.1
