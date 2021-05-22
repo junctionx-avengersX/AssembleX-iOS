@@ -8,7 +8,7 @@
 import RxDataSources
 
 struct AddressDetailInfo:
-  Decodable,
+  Codable,
   Equatable,
   IdentifiableType
 {
@@ -24,8 +24,8 @@ struct AddressDetailInfo:
   let type: String?
   let id: String
   let title: String?
-  let x: Double?
-  let y: Double?
+  let x: String?
+  let y: String?
   let dist: Double?
   let totalScore: Double?
   let sid: String?

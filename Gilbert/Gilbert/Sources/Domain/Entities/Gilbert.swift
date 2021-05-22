@@ -27,4 +27,6 @@ struct Gilbert:
   let rating: Int?
   let delay: Double?
   let cost: Int?
+  let introduction: String?
+  let guideCount: Int?
 }
