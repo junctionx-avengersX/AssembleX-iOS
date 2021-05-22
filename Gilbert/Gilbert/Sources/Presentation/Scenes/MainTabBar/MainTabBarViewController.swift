@@ -1,32 +1,47 @@
 import UIKit
+
+import RxCocoa
+import RxSwift
+
 enum TabBarType {
   case home
-  case gillbert
-  case noti
+  case gilbert
+  case notification
   case mypage
 }
+
 class MainTabBarViewController : UITabBarController {
   // MARK: - Overridden: ParentClass
   override func viewDidLoad() {
     super.viewDidLoad()
-    
     self.tabBar.isTranslucent = false
     self.tabBar.backgroundColor = .white
     self.tabBar.tintColor = UIColor(named: "color_primery")
     self.tabBar.shadowImage = UIImage.asImage(color: .init(hex: "#e8ecf2"))
-    
+    setupTabBar()
     setupViewControllers()
   }
+  
   // MARK: - Private methods
   private func setupViewControllers() {
+    let firstController = createNavigationController(type: .home)
+    let secondeController = createNavigationController(type: .gilbert)
+    
+    let thirdController = createNavigationController(type: .notification)
+    let fourthController = createNavigationController(type: .mypage)
     viewControllers = [
-      createNavigationController(type: .home),
-      createNavigationController(type: .gillbert),
-      createNavigationController(type: .noti),
-      createNavigationController(type: .mypage)
+      firstController,
+      secondeController,
+      thirdController,
+      fourthController
     ]
   }
-  private func createNavigationController(type: TabBarType) -> UINavigationController {
+  
+  private func setupTabBar() {
+    UITabBar.appearance().tintColor = UIColor(rgb: "#32d74b")
+  }
+  
+  private func createNavigationController(type: TabBarType) -> UIViewController {
     switch type {
     case .home:
       let navigationController = UINavigationController()
@@ -39,18 +54,43 @@ class MainTabBarViewController : UITabBarController {
         tag: 0
       )
       return navigationController
-    case .gillbert:
-      let navigationController: UINavigationController = .init()
-      navigationController.tabBarItem = UITabBarItem(title: "Gillbert", image: UIImage(named: "icon_gillbert"), tag: 1)
+    case .gilbert:
+      let navigationController = UINavigationController()
+      let navigator = GilbertListNavigator(presenter: navigationController)
+      let serviceProvider = ServiceProvider()
+      let viewModel = GilbertListViewModel(
+        navigator: navigator,
+        provider: serviceProvider, gilbertInfoPublishRelay: PublishRelay<Gilbert>()
+      )
+      let gilbertListViewController = GilbertListViewController(viewModel: viewModel)
+      navigationController.pushViewController(gilbertListViewController, animated: false)
+      navigationController.tabBarItem = UITabBarItem(
+        title: "Gilbert",
+        image: UIImage(named: "gilbert_tab_img"),
+        selectedImage: nil
+      )
       return navigationController
-    case .noti:
-      let navigationController: UINavigationController = .init()
-      navigationController.tabBarItem = UITabBarItem(title: "Noti", image: UIImage(named: "icon_noti"), tag: 2)
-      return navigationController
+    case .notification:
+      let serviceProvider = ServiceProvider()
+      let viewModel = SearchAddressViewModel(
+        
+        provider: serviceProvider, selectedAddressPublishRelay: PublishRelay<AddressDetailInfo>()
+      )
+      let searchAddressViewController = SearchAddressViewController(viewModel: viewModel)
+      searchAddressViewController.tabBarItem = UITabBarItem(
+        title: "Notification",
+        image: UIImage(named: ""),
+        selectedImage: nil
+      )
+      return searchAddressViewController
     case .mypage:
-      let navigationController: UINavigationController = .init()
-      navigationController.tabBarItem = UITabBarItem(title: "Mypage", image: UIImage(named: "icon_account"), tag: 3)
-      return navigationController
+      let matchingResultViewController = MatchingResultViewController()
+      matchingResultViewController.tabBarItem = UITabBarItem(
+        title: "My Page",
+        image: UIImage(named: ""),
+        selectedImage: nil
+      )
+      return matchingResultViewController
     }
   }
 }

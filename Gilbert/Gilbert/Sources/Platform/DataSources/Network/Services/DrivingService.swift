@@ -25,5 +25,4 @@ class DrivingService: DrivingServiceType {
     return self.networking.request(.target(DrivingAPI.pathNavigation(start: start, goal: goal)))
       .map(Driving.self)
   }
-  
 }
