@@ -10,7 +10,7 @@ import Foundation
 import RxSwift
 
 protocol GilbertListServiceType: AnyObject {
-  func fetchGilbertList(base: String, destination: String, transportations: String) -> Single<[Gilbert]>
+  func fetchGilbertList(base: String, destination: String, transportations: String) -> Single<[GilbertListSectionModel]>
 }
 
 class GilbertListService: GilbertListServiceType {
@@ -21,10 +21,14 @@ class GilbertListService: GilbertListServiceType {
     self.networking = networking
   }
   
-  func fetchGilbertList(base: String, destination: String, transportations: String) -> Single<[Gilbert]> {
+  func fetchGilbertList(base: String, destination: String, transportations: String) -> Single<[GilbertListSectionModel]> {
     return self.networking.request(
       .target(GilbertListAPI.fetchGilbertList(base: base, destination: destination, transportations: transportations))
     )
-      .map([Gilbert].self)
+    .map([Gilbert].self)
+    .flatMap { gilberts -> Single<[GilbertListSectionModel]> in
+      let sectionModel = GilbertListSectionModel(items: gilberts)
+      return Single<[GilbertListSectionModel]>.just([sectionModel])
+    }
   }
 }
