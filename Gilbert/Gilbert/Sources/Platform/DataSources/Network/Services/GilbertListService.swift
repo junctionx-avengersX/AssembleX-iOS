@@ -10,18 +10,21 @@ import Foundation
 import RxSwift
 
 protocol GilbertListServiceType: AnyObject {
-  // func fetchGilbertList()
+  func fetchGilbertList(base: String, destination: String, transportations: String) -> Single<[Gilbert]>
 }
 
 class GilbertListService: GilbertListServiceType {
+  
   fileprivate let networking: Networking
 
   init(networking: Networking) {
     self.networking = networking
   }
   
-  func getDriving(start: MapPosition, goal: MapPosition) -> Single<Driving> {
-    return self.networking.request(.target(DrivingAPI.pathNavigation(start: start, goal: goal)))
-      .map(Driving.self)
+  func fetchGilbertList(base: String, destination: String, transportations: String) -> Single<[Gilbert]> {
+    return self.networking.request(
+      .target(GilbertListAPI.fetchGilbertList(base: base, destination: destination, transportations: transportations))
+    )
+      .map([Gilbert].self)
   }
 }

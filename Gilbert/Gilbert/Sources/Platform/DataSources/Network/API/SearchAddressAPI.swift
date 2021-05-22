@@ -10,7 +10,7 @@ import Foundation
 import Moya
 
 enum SearchAddressAPI {
-  case searchAddress(base: String, destination: String, transportations: String)
+  case searchAddress(query: String)
 }
 
 extension SearchAddressAPI: TargetType {
@@ -39,15 +39,11 @@ extension SearchAddressAPI: TargetType {
   var task: Task {
     switch self {
     case let .searchAddress(
-          base,
-          destination,
-          transportations
+        query
     ):
       return .requestParameters(
         parameters: [
-          "base": base,
-          "destination": destination,
-          "transportations": transportations
+          "query": query,
         ],
         encoding: URLEncoding.default
       )
