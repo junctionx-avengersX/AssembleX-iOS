@@ -38,6 +38,7 @@ class GilbertListViewController: BaseViewController {
   }
   
   override func setupConstraints() {
+    super.setupConstraints()
     collectionView.snp.makeConstraints {
       $0.bottom.leading.trailing.top.equalToSuperview()
     }
@@ -46,12 +47,24 @@ class GilbertListViewController: BaseViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
     setupUI()
+    bindViewModel()
   }
   
   private func bindViewModel() {
     let viewWillAppear = rx.viewWillAppear.asObservable().map { _ in }
     
     let input = type(of: self.viewModel).Input(initialTrigger: viewWillAppear)
+    
+    let output = viewModel.transform(input: input)
+    
+    output.receivedGilbertList.asDriver(onErrorJustReturn: [])
+      .drive { list in
+      print(list)
+    } onCompleted: {
+      
+    } onDisposed: {
+      
+    }
   }
 }
 
