@@ -3,8 +3,7 @@ import Foundation
 // MARK: - Welcome
 struct Driving: Codable {
     let code: Int
-    let message: String
-    let currentDateTime: String
+    let message, currentDateTime: String
     let route: Route
 }
 
@@ -40,6 +39,7 @@ struct Summary: Codable {
     let start: Start
     let goal: Goal
     let distance, duration: Int
+    let departureTime: String
     let bbox: [[Double]]
     let tollFare, taxiFare, fuelPrice: Int
 }

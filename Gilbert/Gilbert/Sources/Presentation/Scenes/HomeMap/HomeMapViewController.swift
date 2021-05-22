@@ -73,7 +73,11 @@ final class HomeMapViewController: BaseViewController {
     let output = viewModel.transform(input: input)
     
     // TODO: UI 작업
-    output
+    output.driving.asObservable().bind(onNext: { driving in
+      print(driving)
+    })
+    
+    viewModel.destinationRelay.accept((.init(127.1058342, 37.359708), .init(129.075986, 35.179470)))
   }
 }
 
@@ -85,8 +89,6 @@ extension HomeMapViewController: CLLocationManagerDelegate {
       if let location = locations.first {
         naverMapView.mapView.moveCamera(.init(scrollTo: .init(lat: location.coordinate.latitude, lng: location.coordinate.longitude)))
          
-        viewModel.destinationRelay
-        
         print("위도: \(location.coordinate.latitude)")
         print("경도: \(location.coordinate.longitude)")
       }

@@ -43,7 +43,8 @@ extension DrivingAPI: TargetType {
       return .requestParameters(
         parameters: [
           "start": "\(start.latitude),\(start.longitude)",
-          "goal": "\(goal.latitude),\(goal.longitude)"
+          "goal": "\(goal.latitude),\(goal.longitude)",
+          "option": "trafast"
         ],
         encoding: URLEncoding.default
       )
