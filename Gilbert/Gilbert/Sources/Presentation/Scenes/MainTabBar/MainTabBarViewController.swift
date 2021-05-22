@@ -34,8 +34,9 @@ class MainTabBarViewController : UITabBarController {
       let navigator = HomeMapNavigator(presenter: navigationController)
       let useCase = HomeMapUseCase(repository: HomeMapRepositoryImpl())
       let viewModel = HomeMapViewModel(
-        useCase: useCase,
-        navigator: navigator
+        useCase: useCase,\
+        navigator: navigator,
+        provider: serviceProvider
       )
       let homeMapViewController = HomeMapViewController(viewModel: viewModel)
       navigationController.pushViewController(homeMapViewController, animated: false)

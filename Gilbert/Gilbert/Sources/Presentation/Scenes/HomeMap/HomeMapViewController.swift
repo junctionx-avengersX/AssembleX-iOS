@@ -9,6 +9,7 @@ import UIKit
 import CoreLocation
 
 import NMapsMap
+import RxCocoa
 
 final class HomeMapViewController: BaseViewController {
   
@@ -33,10 +34,10 @@ final class HomeMapViewController: BaseViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
     view.backgroundColor = .blue
-    
-    self.initializeNaverMap()
-    self.initializeLocation()
-    self.binding()
+
+    initializeNaverMap()
+    initializeLocation()
+    bindViewModel()
   }
   
   override func setupConstraints() {
@@ -66,16 +67,13 @@ final class HomeMapViewController: BaseViewController {
     }
   }
   
-  func binding() {
-    let provider = ServiceProvider()
-    provider.drivingService.getDriving(
-      start: .init(127.1058342, 37.359708),
-      goal: .init(129.075986, 35.179470)
-    ).asObservable()
-    .bind(onNext: { driving in
-      print(driving)
-    })
-    .disposed(by: self.disposeBag)
+
+  private func bindViewModel() {
+    let input = type(of: self.viewModel).Input(destination: viewModel.destinationRelay.asObservable())
+    let output = viewModel.transform(input: input)
+    
+    // TODO: UI 작업
+    output
   }
 }
 
@@ -87,6 +85,8 @@ extension HomeMapViewController: CLLocationManagerDelegate {
       if let location = locations.first {
         naverMapView.mapView.moveCamera(.init(scrollTo: .init(lat: location.coordinate.latitude, lng: location.coordinate.longitude)))
          
+        viewModel.destinationRelay
+        
         print("위도: \(location.coordinate.latitude)")
         print("경도: \(location.coordinate.longitude)")
       }
