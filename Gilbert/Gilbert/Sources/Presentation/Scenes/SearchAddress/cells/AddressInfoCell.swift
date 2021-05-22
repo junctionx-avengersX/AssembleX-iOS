@@ -8,6 +8,8 @@
 import UIKit
 
 class AddressInfoCell: BaseCollectionViewCell {
+  
+  lazy var backgroundButtonTap = backgroundButton.rx.tap
 
   private let imageView = UIImageView().then {
     $0.image = UIImage(named: "marker_img")
@@ -22,6 +24,8 @@ class AddressInfoCell: BaseCollectionViewCell {
     $0.font = .font(weight: .regular, size: 12)
     $0.textColor = UIColor(rgb: "#999999")
   }
+  
+  private let backgroundButton = UIButton()
   
   override init(frame: CGRect) {
     super.init(frame: frame)

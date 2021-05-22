@@ -7,6 +7,7 @@ enum TabBarType {
   case home
   case gilbert
   case notification
+  case mypage
 }
 
 class MainTabBarViewController : UITabBarController {
@@ -23,10 +24,12 @@ class MainTabBarViewController : UITabBarController {
     let secondeController = createNavigationController(type: .gilbert)
     
     let thirdController = createNavigationController(type: .notification)
+    let fourthController = createNavigationController(type: .mypage)
     viewControllers = [
       firstController,
       secondeController,
-      thirdController
+      thirdController,
+      fourthController
     ]
   }
   
@@ -83,6 +86,14 @@ class MainTabBarViewController : UITabBarController {
         selectedImage: nil
       )
       return searchAddressViewController
+    case .mypage:
+      let matchingResultViewController = MatchingResultViewController()
+      matchingResultViewController.tabBarItem = UITabBarItem(
+        title: "My Page",
+        image: UIImage(named: ""),
+        selectedImage: nil
+      )
+      return matchingResultViewController
     }
   }
 }

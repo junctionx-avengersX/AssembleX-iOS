@@ -12,7 +12,7 @@ class SearchAddressViewModel {
   
   private let provider: ServiceProvider
   
-  private var selectedAddressPublishRelay = PublishRelay<AddressDetailInfo>()
+  var selectedAddressPublishRelay: PublishRelay<AddressDetailInfo>
   
   var textInputPublishRelay = PublishRelay<String?>()
   

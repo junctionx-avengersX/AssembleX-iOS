@@ -13,7 +13,8 @@ class GilbertListViewModel {
   private let navigator: GilbertListNavigator
   private let provider: ServiceProvider
   private let disposeBag = DisposeBag()
-  private var gilbertInfoPublishRelay = PublishRelay<Gilbert>()
+  
+  var gilbertInfoPublishRelay = PublishRelay<Gilbert>()
   
   init(
     navigator: GilbertListNavigator,
