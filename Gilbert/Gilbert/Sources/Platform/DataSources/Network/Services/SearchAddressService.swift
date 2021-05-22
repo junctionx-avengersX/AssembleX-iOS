@@ -10,7 +10,7 @@ import Foundation
 import RxSwift
 
 protocol SearchAddressServiceType: AnyObject {
-  func searchAddress(query: String) -> Single<[SearchAddressSectionModel]>
+  func searchAddress(query: String) -> Observable<[SearchAddressSectionModel]>
 }
 
 class SearchAddressService: SearchAddressServiceType {
@@ -20,17 +20,18 @@ class SearchAddressService: SearchAddressServiceType {
     self.networking = networking
   }
   
-  func searchAddress(query: String) -> Single<[SearchAddressSectionModel]> {
+  func searchAddress(query: String) -> Observable<[SearchAddressSectionModel]> {
     return self.networking
       .request(.target(SearchAddressAPI.searchAddress(query: query))
       )
       .map(AddressDetailInfoList.self)
-      .flatMap { list -> Single<[SearchAddressSectionModel]> in
+      .asObservable()
+      .flatMap { list -> Observable<[SearchAddressSectionModel]> in
         if let items = list.place {
           let sectionModel = SearchAddressSectionModel(items: items)
-          return Single<[SearchAddressSectionModel]>.just([sectionModel])
+          return Observable<[SearchAddressSectionModel]>.just([sectionModel])
         } else {
-          return Single<[SearchAddressSectionModel]>.just([])
+          return Observable<[SearchAddressSectionModel]>.just([])
         }
       }
   }

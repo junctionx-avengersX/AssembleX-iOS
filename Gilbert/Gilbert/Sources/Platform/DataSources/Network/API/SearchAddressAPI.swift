@@ -20,13 +20,8 @@ extension SearchAddressAPI: TargetType {
   
   var path: String {
     switch self {
-    case let .searchAddress(query):
-      if let queryPercent = query.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) {
-        return "maps/search/\(queryPercent)"
-      } else {
-        return "maps/search/"
-      }
-      
+    case .searchAddress:
+      return "maps/search/"
     }
   }
   
@@ -46,7 +41,12 @@ extension SearchAddressAPI: TargetType {
     case let .searchAddress(
         query
     ):
-      return .requestPlain
+      return .requestParameters(
+        parameters: [
+          "query": query,
+        ],
+        encoding: URLEncoding.default
+      )
     }
   }
   
