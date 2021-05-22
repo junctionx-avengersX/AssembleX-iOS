@@ -8,8 +8,12 @@
 import UIKit
 
 import Kingfisher
+import RxCocoa
+import RxSwift
 
 class GilbertInfoCell: BaseCollectionViewCell {
+  
+  lazy var backgroundButtonTap = backgroundButton.rx.tap
   
   // MARK: - UI Components
   
@@ -47,6 +51,7 @@ class GilbertInfoCell: BaseCollectionViewCell {
   
   private let serviceCountLabel = GreenPaddingLabel().then {
     $0.text = "30회"
+    $0.isHidden = true
   }
   
   private let userProfileImageView = UIImageView().then {
@@ -57,7 +62,7 @@ class GilbertInfoCell: BaseCollectionViewCell {
   
   private let descriptionLabel = UILabel().then {
     $0.font = .font(weight: .regular, size: 12)
-    $0.textColor = UIColor(rgb: "#030303")
+    $0.textColor = UIColor(rgb: "#999999")
   }
   
   private let checkMarkImageView = UIImageView()
@@ -69,6 +74,8 @@ class GilbertInfoCell: BaseCollectionViewCell {
   }
   
   private var thumbUpViews = [UIImageView]()
+  
+  private var backgroundButton = UIButton()
   
   override init(frame: CGRect) {
     super.init(frame: frame)
@@ -102,6 +109,17 @@ class GilbertInfoCell: BaseCollectionViewCell {
         thumbUpViews[index].image = UIImage(named: "thumbup_blank_img")?.withTintColor(UIColor(rgb: "#32d74b"))
       }
     }
+    
+    if let count = gilbertInfo.guideCount, count > 0 {
+      serviceCountLabel.text = "\(count) times"
+      serviceCountLabel.isHidden = false
+    } else {
+      serviceCountLabel.isHidden = true
+    }
+    
+    if let intro = gilbertInfo.introduction {
+      descriptionLabel.text = intro
+    }
   }
 }
 
@@ -109,7 +127,10 @@ class GilbertInfoCell: BaseCollectionViewCell {
 extension GilbertInfoCell {
   private func setupUI() {
     contentView.backgroundColor = UIColor(rgb: "#f4f5f7")
-    contentView.addSubview(backgroundCardView)
+    contentView.addSubviews(
+      backgroundCardView,
+      backgroundButton
+    )
     
     backgroundCardView.addSubviews(
       userNameBoldLabel,
@@ -130,6 +151,13 @@ extension GilbertInfoCell {
   
   private func layout() {
     backgroundCardView.snp.makeConstraints {
+      $0.top.equalToSuperview().offset(10)
+      $0.leading.equalToSuperview().offset(24)
+      $0.trailing.equalToSuperview().offset(-24)
+      $0.bottom.equalToSuperview().offset(-10)
+    }
+    
+    backgroundButton.snp.makeConstraints {
       $0.top.equalToSuperview().offset(10)
       $0.leading.equalToSuperview().offset(24)
       $0.trailing.equalToSuperview().offset(-24)
