@@ -6,13 +6,16 @@
 //
 
 import UIKit
+import CoreLocation
+
 import NMapsMap
 
-class HomeMapViewController: BaseViewController {
+final class HomeMapViewController: BaseViewController {
   
-  let naverMapView = NMFNaverMapView()
+  let naverMapView: NMFNaverMapView = .init()
   
   // MARK: - Properties
+  let locationManager: CLLocationManager = .init()
   
   private let viewModel: HomeMapViewModel
   
@@ -31,12 +34,53 @@ class HomeMapViewController: BaseViewController {
     super.viewDidLoad()
     view.backgroundColor = .blue
     
-    view.addSubview(naverMapView)
+    self.initializeNaverMap()
+    self.initializeLocation()
   }
   
   override func setupConstraints() {
     naverMapView.snp.makeConstraints {
       $0.bottom.left.right.top.equalTo(self.view)
     }
+  }
+  fileprivate func initializeNaverMap() {
+    self.naverMapView.showLocationButton = true
+    self.naverMapView.mapView.positionMode = .normal
+    
+    view.addSubview(naverMapView)
+  }
+  
+  fileprivate func initializeLocation() {
+    
+    locationManager.delegate = self
+    locationManager.desiredAccuracy = kCLLocationAccuracyBest
+    locationManager.requestWhenInUseAuthorization()
+    
+    if CLLocationManager.locationServicesEnabled() {
+      print("위치 서비스 On 상태")
+      locationManager.startUpdatingLocation()
+      print(locationManager.location?.coordinate)
+    } else {
+      print("위치 서비스 Off 상태")
+    }
+  }
+}
+
+extension HomeMapViewController: CLLocationManagerDelegate {
+  func locationManager(
+    _ manager: CLLocationManager,
+    didUpdateLocations locations: [CLLocation]) {
+    if let location = locations.first {
+      if let location = locations.first {
+        naverMapView.mapView.moveCamera(.init(scrollTo: .init(lat: location.coordinate.latitude, lng: location.coordinate.longitude)))
+         
+        print("위도: \(location.coordinate.latitude)")
+        print("경도: \(location.coordinate.longitude)")
+      }
+    }
+  }
+  
+  func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
+    print(error)
   }
 }

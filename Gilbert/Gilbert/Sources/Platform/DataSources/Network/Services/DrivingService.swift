@@ -6,11 +6,12 @@
 //
 
 import Foundation
+import CoreLocation
 
 import RxSwift
 
 protocol DrivingServiceType: AnyObject {
-  func getDriving() -> Single<Driving>
+  func getDriving(start: MapPosition, goal: MapPosition) -> Single<Driving>
 }
 
 class DrivingService: DrivingServiceType {
@@ -20,8 +21,9 @@ class DrivingService: DrivingServiceType {
     self.networking = networking
   }
   
-  func getDriving() -> Single<Driving> {
-    return self.networking.request(.target(DrivingAPI.pathNavigation))
+  func getDriving(start: MapPosition, goal: MapPosition) -> Single<Driving> {
+    return self.networking.request(.target(DrivingAPI.pathNavigation(start: start, goal: goal)))
       .map(Driving.self)
   }
+  
 }

@@ -60,5 +60,7 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>길버트 안내를 위하여 현재 위치를 제공해드리기 위해 사용자의 위치 정보를 사용합니다.</string>
 </dict>
 </plist>

@@ -10,7 +10,7 @@ import Foundation
 import Moya
 
 enum DrivingAPI {
-  case pathNavigation
+  case pathNavigation(start: MapPosition, goal: MapPosition)
 
 }
 
@@ -39,12 +39,21 @@ extension DrivingAPI: TargetType {
   
   var task: Task {
     switch self {
-    case .pathNavigation:
-      return .requestPlain
+    case let .pathNavigation(start, goal):
+      return .requestParameters(
+        parameters: [
+          "start": "\(start.latitude),\(start.longitude)",
+          "goal": "\(goal.latitude),\(goal.longitude)"
+        ],
+        encoding: URLEncoding.default
+      )
     }
   }
   
   var headers: [String : String]? {
-    return [:]
+    return [
+      "X-NCP-APIGW-API-KEY-ID": "ti0i89hz24",
+      "X-NCP-APIGW-API-KEY": "uyh3laKcnwrbMCbrStbKue3SvpYYMarVhqyrSaAN"
+    ]
   }
 }
