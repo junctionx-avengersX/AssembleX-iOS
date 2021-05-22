@@ -69,7 +69,7 @@ class SearchAddressViewController: BaseViewController {
             ) else {
         return UICollectionViewCell()
       }
-      
+      cell.configure(addressInfo: cellData)
       return cell
     } configureSupplementaryView: { sectionModel, collectionView, kind, indexPath -> UICollectionReusableView in
       return UICollectionReusableView()
@@ -102,30 +102,21 @@ class SearchAddressViewController: BaseViewController {
   private func bindViewModel() {
     let destinationText = destinationAddressTextField.rx.text
       .distinctUntilChanged()
-      .do(onNext: { text in
-        print(text)
-      })
+      .debounce(RxTimeInterval.milliseconds(500), scheduler: MainScheduler.instance)
       .asObservable()
-      .bind(to: viewModel.textInputPublishRelay)
     
-    let input = type(of: self.viewModel).Input(destinationTextFieldQuery: viewModel.textInputPublishRelay.asObservable())
+    let input = type(of: self.viewModel).Input(destinationTextFieldQuery: destinationText)
     
     let output = viewModel.transform(input: input)
     
     output.placesInfoReceived
-      .subscribe { data in
-        print("This is : \(data.first?.items)")
-      } onError: { _ in
-        
-      } onCompleted: {
-        
-      } onDisposed: {
-        
-      }
+      .bind(to: collectionView.rx.items(dataSource: self.buildDataSource()))
       .disposed(by: disposeBag)
   }
   
   private func bindUI() {
+    collectionView.rx.setDelegate(self).disposed(by: disposeBag)
+    
     destinationAddressTextField.rx
       .controlEvent(UIControl.Event.editingDidBegin)
       .bind { [weak self] _ in

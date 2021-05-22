@@ -33,7 +33,13 @@ class AddressInfoCell: BaseCollectionViewCell {
   }
   
   func configure(addressInfo: AddressDetailInfo) {
+    if let title = addressInfo.title {
+      titleLabel.text = title
+    }
     
+    if let roadAddress = addressInfo.roadAddress {
+      descriptionLabel.text = roadAddress
+    }
   }
 }
 
