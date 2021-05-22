@@ -16,7 +16,7 @@ class ReservationModalViewController: UIViewController {
   }()
   
   let pinImageView: UIImageView = UIImageView().then {
-    $0.image = .init(named: "icon_pin")
+    $0.image = UIImage.init(named: "icon_pin")
   }
   
   let menuView = UIView()

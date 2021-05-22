@@ -17,3 +17,4 @@ targets:
       - package: RxDataSources
       - package: Kingfisher
       - package: RxMoya
+      - package: ReactorKit
