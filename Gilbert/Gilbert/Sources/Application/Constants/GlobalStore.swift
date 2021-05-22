@@ -6,3 +6,8 @@
 //
 
 import Foundation
+
+class GlobalStore {
+  
+  static let gilbertBaseURL = URL(string: "http://132.226.233.89:3000/api/")!
+}
