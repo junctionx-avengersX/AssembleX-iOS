@@ -36,6 +36,7 @@ final class HomeMapViewController: BaseViewController {
     
     self.initializeNaverMap()
     self.initializeLocation()
+    self.binding()
   }
   
   override func setupConstraints() {
@@ -63,6 +64,18 @@ final class HomeMapViewController: BaseViewController {
     } else {
       print("위치 서비스 Off 상태")
     }
+  }
+  
+  func binding() {
+    let provider = ServiceProvider()
+    provider.drivingService.getDriving(
+      start: .init(127.1058342, 37.359708),
+      goal: .init(129.075986, 35.179470)
+    ).asObservable()
+    .bind(onNext: { driving in
+      print(driving)
+    })
+    .disposed(by: self.disposeBag)
   }
 }
 
