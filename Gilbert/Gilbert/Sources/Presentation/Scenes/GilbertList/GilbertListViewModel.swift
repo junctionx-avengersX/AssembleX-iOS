@@ -13,12 +13,16 @@ class GilbertListViewModel {
   private let navigator: GilbertListNavigator
   private let provider: ServiceProvider
   private let disposeBag = DisposeBag()
+  private var gilbertInfoPublishRelay = PublishRelay<Gilbert>()
+  
   init(
     navigator: GilbertListNavigator,
-    provider: ServiceProvider
+    provider: ServiceProvider,
+    gilbertInfoPublishRelay: PublishRelay<Gilbert>
   ) {
     self.navigator = navigator
     self.provider = provider
+    self.gilbertInfoPublishRelay = gilbertInfoPublishRelay
   }
 }
 
@@ -28,11 +32,11 @@ extension GilbertListViewModel {
   }
   
   struct Output {
-    let receivedGilbertList: Observable<[Gilbert]>
+    let receivedGilbertList: Observable<[GilbertListSectionModel]>
   }
   
   func transform(input: Input) -> Output {
-    let receivedGilbertList = input.initialTrigger.flatMapLatest { [weak self] _ -> Observable<[Gilbert]> in
+    let receivedGilbertList = input.initialTrigger.flatMapLatest { [weak self] _ -> Observable<[GilbertListSectionModel]> in
       guard let this = self else { return Observable.empty() }
       return this.provider.gilbertListService.fetchGilbertList(base: "ddd", destination: "dddd", transportations: TransportationType.bus.rawValue)
         .asObservable()

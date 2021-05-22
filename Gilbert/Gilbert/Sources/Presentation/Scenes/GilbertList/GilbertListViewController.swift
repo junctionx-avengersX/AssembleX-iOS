@@ -30,7 +30,7 @@ class GilbertListViewController: BaseViewController {
       $0.scrollDirection = .vertical
     })
   ).then {
-    $0.backgroundColor = .white
+    $0.backgroundColor = UIColor(rgb: "#f4f5f7")
     $0.showsVerticalScrollIndicator = false
     $0.register(cellType: GilbertInfoCell.self)
     $0.register(
@@ -59,14 +59,10 @@ class GilbertListViewController: BaseViewController {
     
     let output = viewModel.transform(input: input)
     
-    output.receivedGilbertList.asDriver(onErrorJustReturn: [])
-      .drive { list in
-      print(list)
-    } onCompleted: {
-      
-    } onDisposed: {
-      
-    }
+    output
+      .receivedGilbertList
+      .bind(to: collectionView.rx.items(dataSource: self.buildDataSource()))
+      .disposed(by: disposeBag)
   }
   
   private func buildDataSource() -> RxCollectionViewSectionedAnimatedDataSource<GilbertListSectionModel> {
@@ -78,7 +74,7 @@ class GilbertListViewController: BaseViewController {
             ) else {
         return UICollectionViewCell()
       }
-      
+      cell.configure(gilbertInfo: cellData)
       return cell
     } configureSupplementaryView: { sectionModel, collectionView, kind, indexPath -> UICollectionReusableView in
       switch kind {

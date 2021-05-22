@@ -7,18 +7,25 @@
 
 import UIKit
 
+import RxCocoa
+import RxSwift
+import RxDataSources
+
 class SearchAddressViewController: BaseViewController {
   
   private let startAddressTextField = UITextField().then {
     
     $0.backgroundColor = UIColor(rgb: "#f9f9f9")
     $0.layer.cornerRadius = 5
+    $0.clearButtonMode = .always
   }
   
   private let destinationAddressTextField = UITextField().then {
     $0.layer.cornerRadius = 5
     $0.layer.borderWidth = 1
-    $0.layer.borderColor = UIColor(rgb: "#32d74b").cgColor
+    $0.layer.borderColor = UIColor(rgb: "#f9f9f9").cgColor
+    $0.clearButtonMode = .always
+    $0.leftView = UIImageView(image: UIImage(named: "marker_img"))
   }
   
   lazy var collectionView = UICollectionView(
@@ -29,11 +36,7 @@ class SearchAddressViewController: BaseViewController {
   ).then {
     $0.backgroundColor = .white
     $0.showsVerticalScrollIndicator = false
-    $0.register(cellType: GilbertInfoCell.self)
-    $0.register(
-      viewType: GilbertListHeaderView.self,
-      positionType: .header
-    )
+    $0.register(cellType: AddressInfoCell.self)
   }
   
   private let viewModel: SearchAddressViewModel
@@ -52,6 +55,25 @@ class SearchAddressViewController: BaseViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
     setupUI()
+    bindUI()
+    bindViewModel()
+  }
+  
+  
+  private func buildDataSource() -> RxCollectionViewSectionedAnimatedDataSource<SearchAddressSectionModel> {
+    return RxCollectionViewSectionedAnimatedDataSource<SearchAddressSectionModel> { _, collectionView, indexPath, cellData -> UICollectionViewCell in
+      guard let
+            cell = collectionView.dequeueReusableCell(
+              indexPath: indexPath,
+              cell: AddressInfoCell.self
+            ) else {
+        return UICollectionViewCell()
+      }
+      
+      return cell
+    } configureSupplementaryView: { sectionModel, collectionView, kind, indexPath -> UICollectionReusableView in
+      return UICollectionReusableView()
+    }
   }
   
   override func setupConstraints() {
@@ -78,7 +100,38 @@ class SearchAddressViewController: BaseViewController {
   }
   
   private func bindViewModel() {
+    let destinationText = destinationAddressTextField.rx.text
+      .distinctUntilChanged()
+      .do(onNext: { text in
+        print(text)
+      })
+      .asObservable()
+      .bind(to: viewModel.textInputPublishRelay)
     
+    let input = type(of: self.viewModel).Input(destinationTextFieldQuery: viewModel.textInputPublishRelay.asObservable())
+    
+    let output = viewModel.transform(input: input)
+    
+    output.placesInfoReceived
+      .subscribe { data in
+        print("This is : \(data.first?.items)")
+      } onError: { _ in
+        
+      } onCompleted: {
+        
+      } onDisposed: {
+        
+      }
+      .disposed(by: disposeBag)
+  }
+  
+  private func bindUI() {
+    destinationAddressTextField.rx
+      .controlEvent(UIControl.Event.editingDidBegin)
+      .bind { [weak self] _ in
+        self?.destinationAddressTextField.layer.borderColor
+          = UIColor(rgb: "#32d74b").cgColor
+      }.disposed(by: disposeBag)
   }
 }
 
@@ -94,4 +147,8 @@ extension SearchAddressViewController {
   }
 }
 
-
+extension SearchAddressViewController: UICollectionViewDelegateFlowLayout {
+  func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+    return CGSize(width: UIScreen.main.bounds.width, height: 58)
+  }
+}

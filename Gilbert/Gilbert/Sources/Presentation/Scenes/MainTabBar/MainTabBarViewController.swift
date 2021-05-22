@@ -1,24 +1,40 @@
 import UIKit
+
+import RxCocoa
+import RxSwift
+
 enum TabBarType {
   case home
   case gilbert
+  case notification
 }
+
 class MainTabBarViewController : UITabBarController {
   // MARK: - Overridden: ParentClass
   override func viewDidLoad() {
     super.viewDidLoad()
+    setupTabBar()
     setupViewControllers()
   }
+  
   // MARK: - Private methods
   private func setupViewControllers() {
     let firstController = createNavigationController(type: .home)
     let secondeController = createNavigationController(type: .gilbert)
+    
+    let thirdController = createNavigationController(type: .notification)
     viewControllers = [
       firstController,
-      secondeController
+      secondeController,
+      thirdController
     ]
   }
-  private func createNavigationController(type: TabBarType) -> UINavigationController {
+  
+  private func setupTabBar() {
+    UITabBar.appearance().tintColor = UIColor(rgb: "#32d74b")
+  }
+  
+  private func createNavigationController(type: TabBarType) -> UIViewController {
     switch type {
     case .home:
       let navigationController = UINavigationController()
@@ -44,16 +60,29 @@ class MainTabBarViewController : UITabBarController {
       let serviceProvider = ServiceProvider()
       let viewModel = GilbertListViewModel(
         navigator: navigator,
-        provider: serviceProvider
+        provider: serviceProvider, gilbertInfoPublishRelay: PublishRelay<Gilbert>()
       )
       let gilbertListViewController = GilbertListViewController(viewModel: viewModel)
       navigationController.pushViewController(gilbertListViewController, animated: false)
       navigationController.tabBarItem = UITabBarItem(
         title: "Gilbert",
-        image: nil,
+        image: UIImage(named: "gilbert_tab_img"),
         selectedImage: nil
       )
       return navigationController
+    case .notification:
+      let serviceProvider = ServiceProvider()
+      let viewModel = SearchAddressViewModel(
+        
+        provider: serviceProvider, selectedAddressPublishRelay: PublishRelay<AddressDetailInfo>()
+      )
+      let searchAddressViewController = SearchAddressViewController(viewModel: viewModel)
+      searchAddressViewController.tabBarItem = UITabBarItem(
+        title: "Notification",
+        image: UIImage(named: ""),
+        selectedImage: nil
+      )
+      return searchAddressViewController
     }
   }
 }
