@@ -6,3 +6,7 @@
 //
 
 import Foundation
+
+struct AddressDetailInfoList: Decodable {
+  let place: [AddressDetailInfo]?
+}
