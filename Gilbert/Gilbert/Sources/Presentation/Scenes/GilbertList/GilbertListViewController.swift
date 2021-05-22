@@ -7,23 +7,57 @@
 
 import UIKit
 
-class GilbertListViewController: UIViewController {
+class GilbertListViewController: BaseViewController {
+  
+  private let viewModel: GilbertListViewModel
+  
+  // MARK: - Con(De)structor
+  
+  init(viewModel: GilbertListViewModel) {
+    self.viewModel = viewModel
+    super.init()
+  }
+  
+  required init?(coder: NSCoder) {
+    fatalError("init(coder:) has not been implemented")
+  }
+  
+  lazy var collectionView = UICollectionView(
+    frame: CGRect.zero,
+    collectionViewLayout: UICollectionViewFlowLayout().then({
+      $0.scrollDirection = .vertical
+    })
+  ).then {
+    $0.backgroundColor = .white
+    $0.showsVerticalScrollIndicator = false
+    $0.register(cellType: GilbertInfoCell.self)
+    $0.register(
+      viewType: GilbertListHeaderView.self,
+      positionType: .header
+    )
+  }
+  
+  override func setupConstraints() {
+    collectionView.snp.makeConstraints {
+      $0.bottom.leading.trailing.top.equalToSuperview()
+    }
+  }
   
   override func viewDidLoad() {
     super.viewDidLoad()
-    
-    // Do any additional setup after loading the view.
+    setupUI()
   }
   
-  
-  /*
-   // MARK: - Navigation
-   
-   // In a storyboard-based application, you will often want to do a little preparation before navigation
-   override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-   // Get the new view controller using segue.destination.
-   // Pass the selected object to the new view controller.
-   }
-   */
-  
+  private func bindViewModel() {
+    let viewWillAppear = rx.viewWillAppear.asObservable().map { _ in }
+    
+    let input = type(of: self.viewModel).Input(initialTrigger: viewWillAppear)
+  }
+}
+
+// MARK: - SetupUI
+extension GilbertListViewController {
+  private func setupUI() {
+    view.addSubview(collectionView)
+  }
 }
