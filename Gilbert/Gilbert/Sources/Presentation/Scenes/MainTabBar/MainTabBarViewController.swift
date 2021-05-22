@@ -14,6 +14,10 @@ class MainTabBarViewController : UITabBarController {
   // MARK: - Overridden: ParentClass
   override func viewDidLoad() {
     super.viewDidLoad()
+    self.tabBar.isTranslucent = false
+    self.tabBar.backgroundColor = .white
+    self.tabBar.tintColor = UIColor(named: "color_primery")
+    self.tabBar.shadowImage = UIImage.asImage(color: .init(hex: "#e8ecf2"))
     setupTabBar()
     setupViewControllers()
   }
@@ -41,20 +45,13 @@ class MainTabBarViewController : UITabBarController {
     switch type {
     case .home:
       let navigationController = UINavigationController()
-      let navigator = HomeMapNavigator(presenter: navigationController)
-      let useCase = HomeMapUseCase(repository: HomeMapRepositoryImpl())
-      let serviceProvider = ServiceProvider()
-      let viewModel = HomeMapViewModel(
-        useCase: useCase,
-        navigator: navigator,
-        provider: serviceProvider
-      )
-      let homeMapViewController = HomeMapViewController(viewModel: viewModel)
+      let provider = ServiceProvider()
+      let homeMapViewController = HomeMapViewController(reactor: .init(provider: provider))
       navigationController.pushViewController(homeMapViewController, animated: false)
       navigationController.tabBarItem = UITabBarItem(
         title: "Home",
-        image: nil,
-        selectedImage: nil
+        image: UIImage(named: "icon_map"),
+        tag: 0
       )
       return navigationController
     case .gilbert:
