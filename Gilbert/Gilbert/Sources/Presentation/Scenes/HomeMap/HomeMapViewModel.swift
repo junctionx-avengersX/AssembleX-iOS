@@ -10,7 +10,7 @@ import RxCocoa
 
 class HomeMapViewModel {
   
-  let destinationRelay: PublishRelay<(MapPosition, MapPosition)>
+  let destinationRelay = PublishRelay<(MapPosition, MapPosition)>()
   
   private let useCase: HomeMapUseCase
   private let navigator: HomeMapNavigator

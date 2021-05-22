@@ -9,6 +9,7 @@ import UIKit
 import CoreLocation
 
 import NMapsMap
+import RxCocoa
 
 final class HomeMapViewController: BaseViewController {
   
@@ -67,7 +68,7 @@ final class HomeMapViewController: BaseViewController {
   }
   
   private func bindViewModel() {
-    let input = type(of: viewModel).Input(destination: viewModel.destinationRelay.asObservable)
+    let input = type(of: self.viewModel).Input(destination: viewModel.destinationRelay.asObservable())
     let output = viewModel.transform(input: input)
     
     // TODO: UI 작업
@@ -83,7 +84,8 @@ extension HomeMapViewController: CLLocationManagerDelegate {
       if let location = locations.first {
         naverMapView.mapView.moveCamera(.init(scrollTo: .init(lat: location.coordinate.latitude, lng: location.coordinate.longitude)))
          
-        viewModel.destinationRelay.accept((location.coordinate.latitude, location.coordinate.longitude))
+        viewModel.destinationRelay
+        
         print("위도: \(location.coordinate.latitude)")
         print("경도: \(location.coordinate.longitude)")
       }
