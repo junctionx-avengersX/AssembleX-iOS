@@ -34,8 +34,9 @@ final class HomeMapViewController: BaseViewController {
     super.viewDidLoad()
     view.backgroundColor = .blue
     
-    self.initializeNaverMap()
-    self.initializeLocation()
+    initializeNaverMap()
+    initializeLocation()
+    bindViewModel()
   }
   
   override func setupConstraints() {
@@ -64,6 +65,14 @@ final class HomeMapViewController: BaseViewController {
       print("위치 서비스 Off 상태")
     }
   }
+  
+  private func bindViewModel() {
+    let input = type(of: viewModel).Input(destination: viewModel.destinationRelay.asObservable)
+    let output = viewModel.transform(input: input)
+    
+    // TODO: UI 작업
+    output
+  }
 }
 
 extension HomeMapViewController: CLLocationManagerDelegate {
@@ -74,6 +83,7 @@ extension HomeMapViewController: CLLocationManagerDelegate {
       if let location = locations.first {
         naverMapView.mapView.moveCamera(.init(scrollTo: .init(lat: location.coordinate.latitude, lng: location.coordinate.longitude)))
          
+        viewModel.destinationRelay.accept((location.coordinate.latitude, location.coordinate.longitude))
         print("위도: \(location.coordinate.latitude)")
         print("경도: \(location.coordinate.longitude)")
       }

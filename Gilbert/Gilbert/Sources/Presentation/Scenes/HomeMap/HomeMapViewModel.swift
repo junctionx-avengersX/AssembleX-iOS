@@ -10,6 +10,8 @@ import RxCocoa
 
 class HomeMapViewModel {
   
+  let destinationRelay: PublishRelay<(MapPosition, MapPosition)>
+  
   private let useCase: HomeMapUseCase
   private let navigator: HomeMapNavigator
   private let provider: ServiceProvider
@@ -23,21 +25,25 @@ class HomeMapViewModel {
   ) {
     self.useCase = useCase
     self.navigator = navigator
+    self.provider = provider
   }
 }
 
 extension HomeMapViewModel: ViewModelType {
   struct Input {
-    let destination: Driver<(MapPosition, MapPosition)>
+    let destination: Observable<(MapPosition, MapPosition)>
   }
   struct Output {
-    let user: Driver<Driving>
+    let user: Observable<Driving>
   }
   
   func transform(input: Input) -> Output {
-    let driving: Driver<Driving> = input.destination.flatMapLatest { [weak self] (start, goal) in
-      return provider.drivingService.getDriving(start: start, goal: goal).asObservable().asDriverOnErrorJustNever()
+    let driving = input.destination.flatMapLatest {
+      [weak self] position -> Observable<Driving> in
+      guard let this = self else { return Observable.empty() }
+      return this.provider.drivingService.getDriving(start: position.0, goal: position.1).asObservable()
     }
+    
     return Output(user: driving)
   }
 }
