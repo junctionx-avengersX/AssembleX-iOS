@@ -1,6 +1,7 @@
 import UIKit
 enum TabBarType {
   case home
+  case gilbert
 }
 class MainTabBarViewController : UITabBarController {
   // MARK: - Overridden: ParentClass
@@ -11,7 +12,11 @@ class MainTabBarViewController : UITabBarController {
   // MARK: - Private methods
   private func setupViewControllers() {
     let firstController = createNavigationController(type: .home)
-    viewControllers = [firstController]
+    let secondeController = createNavigationController(type: .gilbert)
+    viewControllers = [
+      firstController,
+      secondeController
+    ]
   }
   private func createNavigationController(type: TabBarType) -> UINavigationController {
     switch type {
@@ -29,6 +34,22 @@ class MainTabBarViewController : UITabBarController {
       navigationController.pushViewController(homeMapViewController, animated: false)
       navigationController.tabBarItem = UITabBarItem(
         title: "Home",
+        image: nil,
+        selectedImage: nil
+      )
+      return navigationController
+    case .gilbert:
+      let navigationController = UINavigationController()
+      let navigator = GilbertListNavigator(presenter: navigationController)
+      let serviceProvider = ServiceProvider()
+      let viewModel = GilbertListViewModel(
+        navigator: navigator,
+        provider: serviceProvider
+      )
+      let gilbertListViewController = GilbertListViewController(viewModel: viewModel)
+      navigationController.pushViewController(gilbertListViewController, animated: false)
+      navigationController.tabBarItem = UITabBarItem(
+        title: "Gilbert",
         image: nil,
         selectedImage: nil
       )
