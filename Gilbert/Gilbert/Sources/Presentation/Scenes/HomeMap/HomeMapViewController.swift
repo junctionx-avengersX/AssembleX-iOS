@@ -71,8 +71,24 @@ final class HomeMapViewController: BaseViewController, View {
     $0.iconImage = currentMarker
     $0.width = CGFloat(NMF_MARKER_SIZE_AUTO)
     $0.height = CGFloat(NMF_MARKER_SIZE_AUTO)
+    $0.zIndex = -10
+    $0.anchor = .init(x: 0, y: 20)
   }
   let currentMarker: NMFOverlayImage = .init(image: UIImage(named: "image_marker")!)
+  
+  lazy var arrivalMaker: NMFMarker = NMFMarker().then {
+    $0.width = CGFloat(NMF_MARKER_SIZE_AUTO)
+    $0.height = CGFloat(NMF_MARKER_SIZE_AUTO)
+    $0.iconImage = arrivalImage
+  }
+  let arrivalImage: NMFOverlayImage = .init(image: .init(named: "image_arrival")!)
+  
+  lazy var departureMaker: NMFMarker = NMFMarker().then {
+    $0.width = CGFloat(NMF_MARKER_SIZE_AUTO)
+    $0.height = CGFloat(NMF_MARKER_SIZE_AUTO)
+    $0.iconImage = departureImage
+  }
+  let departureImage: NMFOverlayImage = .init(image: .init(named: "image_departure")!)
   
   // MARK: Properties
   let locationManager: CLLocationManager = .init()
@@ -84,6 +100,8 @@ final class HomeMapViewController: BaseViewController, View {
       }
     }
   }
+  
+  var arrivalPosition: NMGLatLng?
   
   // MARK: Initializing
   init(reactor: HomeMapReactor) {
@@ -113,11 +131,6 @@ final class HomeMapViewController: BaseViewController, View {
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
     self.navigationController?.setNavigationBarHidden(true, animated: animated)
-  }
-  
-  override func viewWillDisappear(_ animated: Bool) {
-    super.viewWillDisappear(animated)
-    self.navigationController?.setNavigationBarHidden(false, animated: animated)
   }
   
   override func setupConstraints() {
@@ -164,6 +177,8 @@ final class HomeMapViewController: BaseViewController, View {
   }
   
   fileprivate func initializeNaverMap() {
+    naverMapView.showZoomControls = false
+    naverMapView.mapView.contentInset = .init(top: 100, left: 60, bottom: 200, right: 60)
     view.addSubview(naverMapView)
   }
   
@@ -197,6 +212,45 @@ extension HomeMapViewController {
         self?.present(viewController, animated: true, completion: nil)
       })
       .disposed(by: self.disposeBag)
+    
+    self.searchButton.rx.tap.asObservable()
+      .bind(onNext: {
+        let serviceProvider = ServiceProvider()
+        let viewModel = SearchAddressViewModel(
+          
+          provider: serviceProvider, selectedAddressPublishRelay: PublishRelay<AddressDetailInfo?>()
+        )
+        let searchAddressViewController = SearchAddressViewController(viewModel: viewModel)
+        searchAddressViewController.hidesBottomBarWhenPushed = true
+        
+        viewModel.selectedAddressPublishRelay.asObservable()
+          .subscribe(onNext: { [weak self] addressInfo in
+            self?.reactor?.action.on(.next(Reactor.Action.findAddressInfo(addressInfo)))
+          })
+          .disposed(by: self.disposeBag)
+        
+        self.navigationController?.pushViewController(searchAddressViewController, animated: true)
+      })
+      .disposed(by: self.disposeBag)
+    
+    self.rx.viewDidAppear.asObservable()
+      .bind(onNext: { [weak self] _ in
+        if
+          let addressInfo = self?.reactor?.currentState.addressInfo,
+          let time = self?.reactor?.currentState.reservationTime,
+          let firstPosition = self?.firstPosition,
+          let arrivalPosition = self?.arrivalPosition
+        {
+          let viewController = ReservationModalViewController(time: time, addressInfo: addressInfo)
+          viewController.modalPresentationStyle = .custom
+          viewController.completionHandler = { [weak self] in
+            self?.reactor?.action.on(.next(Reactor.Action.readyForFindRoute(.init(firstPosition.lat, firstPosition.lng), .init(arrivalPosition.lat, arrivalPosition.lng))))
+          }
+          self?.present(viewController, animated: true, completion: nil)
+        }
+      })
+      .disposed(by: self.disposeBag)
+    
   }
   
   // MARK: actions (View -> Reactor)
@@ -220,6 +274,60 @@ extension HomeMapViewController {
           self?.timeButton.layer.borderColor = UIColor.init(hex: "#e8ecf2").cgColor
           self?.timeButton.setTitle("Times setup", for: .normal)
         }
+      })
+      .disposed(by: self.disposeBag)
+    
+    reactor.state.map { $0.addressInfo }
+      .asObservable()
+      .distinctUntilChanged()
+      .bind(onNext: { [weak self] addressInfo in
+        if
+          let addressInfo = addressInfo,
+          let lat = Double(addressInfo.y ?? ""),
+          let lng = Double(addressInfo.x ?? "")
+        {
+          let position: NMGLatLng = .init(lat: lat, lng: lng)
+          self?.arrivalPosition = position
+          self?.searchButton.isHidden = true
+          self?.naverMapView.mapView.moveCamera(.init(scrollTo: position))
+          self?.arrivalMaker.position = position
+          self?.arrivalMaker.mapView = self?.naverMapView.mapView
+        }
+      })
+      .disposed(by: self.disposeBag)
+    
+    
+    reactor.state.map { $0.driving }
+      .asObservable()
+      .bind(onNext: { [weak self] driving in
+        guard
+          let self = self,
+          let driving = driving,
+          let firstPosition = self.firstPosition,
+          let arrivalPosition = self.arrivalPosition
+        else {
+          return
+        }
+        
+        for t in driving.route.trafast {
+          var positions: [NMGLatLng] = .init()
+          for b in t.path {
+            positions.append(.init(lat: b.last ?? 0, lng: b.first ?? 0))
+          }
+          let polyline = NMFPolylineOverlay(positions)
+          polyline?.joinType = .round
+          polyline?.capType = .round
+          polyline?.mapView = self.naverMapView.mapView
+        }
+        
+        self.naverMapView.mapView.moveCamera(.init(fit: .init(southWest: firstPosition, northEast: arrivalPosition)))
+        
+        self.departureMaker.position = firstPosition
+        self.departureMaker.mapView = self.naverMapView.mapView
+        
+        let viewController = RouteModalViewController()
+        viewController.modalPresentationStyle = .custom
+        self.present(viewController, animated: true, completion: nil)
       })
       .disposed(by: self.disposeBag)
   }

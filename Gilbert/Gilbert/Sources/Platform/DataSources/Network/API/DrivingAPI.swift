@@ -42,8 +42,8 @@ extension DrivingAPI: TargetType {
     case let .pathNavigation(start, goal):
       return .requestParameters(
         parameters: [
-          "start": "\(start.latitude),\(start.longitude)",
-          "goal": "\(goal.latitude),\(goal.longitude)",
+          "start": "\(start.longitude),\(start.latitude)",
+          "goal": "\(goal.longitude),\(goal.latitude),",
           "option": "trafast"
         ],
         encoding: URLEncoding.default

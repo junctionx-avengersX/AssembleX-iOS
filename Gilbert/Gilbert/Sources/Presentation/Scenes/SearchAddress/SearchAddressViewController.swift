@@ -26,10 +26,12 @@ class SearchAddressViewController: BaseViewController {
     $0.layer.borderColor = UIColor(rgb: "#f9f9f9").cgColor
     $0.clearButtonMode = .always
     $0.leftViewMode = .always
+    let leftView: UIView = .init(frame: .init(x: 0, y: 0, width: 42, height: 48))
     let imageView = UIImageView(image: UIImage(named: "green_oval")).then({
-      $0.frame = CGRect(x: 20, y: 0, width: 100, height: 100)
+      $0.frame = CGRect(x: 20, y: 22, width: 4, height: 4)
     })
-    $0.leftView = imageView
+    leftView.addSubview(imageView)
+    $0.leftView = leftView
   }
   
   private let backbuttonImageView = UIImageView().then {
@@ -72,25 +74,29 @@ class SearchAddressViewController: BaseViewController {
     setupUI()
     bindUI()
     bindViewModel()
+    hideKeyboardWhenTappedAround(cancelsTouchesInView: true)
   }
   
+  override func viewWillAppear(_ animated: Bool) {
+    super.viewWillAppear(animated)
+    self.navigationController?.setNavigationBarHidden(true, animated: animated)
+  }
   
   private func buildDataSource() -> RxCollectionViewSectionedAnimatedDataSource<SearchAddressSectionModel> {
     return RxCollectionViewSectionedAnimatedDataSource<SearchAddressSectionModel> { _, collectionView, indexPath, cellData -> UICollectionViewCell in
       guard let
-            cell = collectionView.dequeueReusableCell(
-              indexPath: indexPath,
-              cell: AddressInfoCell.self
-            ) else {
+              cell = collectionView.dequeueReusableCell(
+                indexPath: indexPath,
+                cell: AddressInfoCell.self
+              ) else {
         return UICollectionViewCell()
       }
       cell.backgroundButtonTap
         .bind { [weak self] _ in
           self?.viewModel.selectedAddressPublishRelay.accept(cellData)
-          // self?.dismiss(animated: true, completion: nil)
+          self?.navigationController?.popViewController(animated: true)
       }
       .disposed(by: cell.cellDisposeBag)
-      
       cell.configure(addressInfo: cellData)
       return cell
     } configureSupplementaryView: { sectionModel, collectionView, kind, indexPath -> UICollectionReusableView in

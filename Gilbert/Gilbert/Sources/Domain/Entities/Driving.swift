@@ -3,7 +3,8 @@ import Foundation
 // MARK: - Welcome
 struct Driving: Codable {
     let code: Int
-    let message, currentDateTime: String
+    let message: String
+    let currentDateTime: String?
     let route: Route
 }
 

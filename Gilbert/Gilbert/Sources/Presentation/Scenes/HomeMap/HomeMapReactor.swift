@@ -13,14 +13,20 @@ import RxSwift
 final class HomeMapReactor: Reactor {
   enum Action {
     case reservationTime(Date?)
+    case findAddressInfo(AddressDetailInfo?)
+    case readyForFindRoute(MapPosition, MapPosition)
   }
   
   enum Mutation {
     case setReservationTime(Date?)
+    case setAddressInfo(AddressDetailInfo?)
+    case setDriving(Driving)
   }
   
   struct State {
     var reservationTime: Date?
+    var addressInfo: AddressDetailInfo?
+    var driving: Driving?
   }
   
   let initialState: State
@@ -36,6 +42,13 @@ final class HomeMapReactor: Reactor {
     switch action {
     case let .reservationTime(time):
       return .just(Mutation.setReservationTime(time))
+    case let .findAddressInfo(addressInfo):
+      return .just(Mutation.setAddressInfo(addressInfo))
+    case let .readyForFindRoute(start, goal):
+      return self.provider.drivingService.getDriving(start: start, goal: goal)
+        .asObservable()
+        .map { Mutation.setDriving($0) }
+        .debug()
     }
   }
   
@@ -44,6 +57,10 @@ final class HomeMapReactor: Reactor {
     switch mutation {
     case let.setReservationTime(time):
       state.reservationTime = time
+    case let .setAddressInfo(addressInfo):
+      state.addressInfo = addressInfo
+    case let .setDriving(driving):
+      state.driving = driving
     }
     return state
   }

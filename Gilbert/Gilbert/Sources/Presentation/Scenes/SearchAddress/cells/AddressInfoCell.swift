@@ -53,7 +53,8 @@ extension AddressInfoCell {
     contentView.addSubviews(
       imageView,
       titleLabel,
-      descriptionLabel
+      descriptionLabel,
+      backgroundButton
     )
     layout()
   }
@@ -75,6 +76,10 @@ extension AddressInfoCell {
       $0.leading.equalTo(titleLabel)
       $0.top.equalTo(titleLabel.snp.bottom).offset(4)
       $0.trailing.equalToSuperview().offset(20)
+    }
+    
+    backgroundButton.snp.makeConstraints {
+      $0.top.bottom.left.right.equalTo(self.contentView)
     }
   }
 }

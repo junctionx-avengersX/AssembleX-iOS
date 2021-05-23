@@ -66,7 +66,7 @@ class MainTabBarViewController : UITabBarController {
       navigationController.pushViewController(gilbertListViewController, animated: false)
       navigationController.tabBarItem = UITabBarItem(
         title: "Gilbert",
-        image: UIImage(named: "gilbert_tab_img"),
+        image: UIImage(named: "icon_gillbert"),
         selectedImage: nil
       )
       return navigationController
@@ -74,12 +74,12 @@ class MainTabBarViewController : UITabBarController {
       let serviceProvider = ServiceProvider()
       let viewModel = SearchAddressViewModel(
         
-        provider: serviceProvider, selectedAddressPublishRelay: PublishRelay<AddressDetailInfo>()
+        provider: serviceProvider, selectedAddressPublishRelay: PublishRelay<AddressDetailInfo?>()
       )
       let searchAddressViewController = SearchAddressViewController(viewModel: viewModel)
       searchAddressViewController.tabBarItem = UITabBarItem(
         title: "Notification",
-        image: UIImage(named: ""),
+        image: UIImage(named: "icon_noti"),
         selectedImage: nil
       )
       return searchAddressViewController
@@ -87,7 +87,7 @@ class MainTabBarViewController : UITabBarController {
       let matchingResultViewController = MatchingResultViewController()
       matchingResultViewController.tabBarItem = UITabBarItem(
         title: "My Page",
-        image: UIImage(named: ""),
+        image: UIImage(named: "icon_account"),
         selectedImage: nil
       )
       return matchingResultViewController
