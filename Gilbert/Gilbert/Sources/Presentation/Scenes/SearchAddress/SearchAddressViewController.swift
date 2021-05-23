@@ -42,6 +42,11 @@ class SearchAddressViewController: BaseViewController {
     $0.text = "Current Location"
   }
   
+  private let defaultImageView = UIImageView().then {
+    $0.contentMode = .scaleAspectFit
+    $0.image = UIImage(named: "temp5")
+  }
+  
   lazy var collectionView = UICollectionView(
     frame: CGRect.zero,
     collectionViewLayout: UICollectionViewFlowLayout().then({
@@ -130,6 +135,13 @@ class SearchAddressViewController: BaseViewController {
       $0.leading.equalTo(backbuttonImageView.snp.trailing)
         .offset(10)
     }
+    
+    /*defaultImageView.snp.makeConstraints {
+      $0.leading.equalTo(destinationAddressTextField)
+      $0.top.equalTo(destinationAddressTextField.snp.bottom).offset(20)
+      $0.width.equalTo(130)
+      $0.height.equalTo(16)
+    }*/
   }
   
   private func bindViewModel() {
