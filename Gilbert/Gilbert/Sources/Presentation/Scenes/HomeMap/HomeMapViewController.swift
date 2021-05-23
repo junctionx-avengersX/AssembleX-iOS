@@ -314,8 +314,13 @@ extension HomeMapViewController {
           viewController.modalPresentationStyle = .custom
 
           viewController.completionHandler = { [weak self] in
-            
-            
+            guard
+              let self = self,
+              let gillbert = self.gilbert
+            else { return }
+            let viewController = MatchingResultViewController(gilbert: gillbert, viewModel: .init())
+            viewController.hidesBottomBarWhenPushed = true
+            self.navigationController?.pushViewController(viewController, animated: true)
           }
 
           self?.present(viewController, animated: true, completion: nil)
