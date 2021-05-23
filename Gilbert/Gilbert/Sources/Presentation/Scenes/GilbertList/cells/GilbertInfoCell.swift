@@ -176,7 +176,7 @@ extension GilbertInfoCell {
     }
     
     userNameLightLabel.snp.makeConstraints {
-      $0.leading.equalTo(userNameBoldLabel.snp.trailing).offset(9)
+      $0.leading.equalTo(userNameBoldLabel.snp.trailing).offset(4)
       $0.centerY.equalTo(userNameBoldLabel)
     }
     

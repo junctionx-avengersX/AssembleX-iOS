@@ -49,11 +49,11 @@ class RouteModalViewController: BaseViewController {
     view.addSubview(menuView)
     
     self.menuView.addSubview(self.stackView)
-    let button1 = TransportationView(image: .init(named: "image_bus"), name: "Public transport", subName: "inconvenient to use public transportation", isShowBest: true)
+    let button1 = TransportationView(image: UIImage.init(named: "image_bus"), name: "Public transport", subName: "inconvenient to use public transportation", isShowBest: true)
     
-    let button2 = TransportationView(image: .init(named: "image_car"), name: "Gillbert Car", subName: "When you need fast and safe travel")
+    let button2 = TransportationView(image: UIImage.init(named: "image_car"), name: "Gillbert Car", subName: "When you need fast and safe travel")
       
-    let button3 = TransportationView(image: .init(named: "image_walking"), name: "By walking", subName: "When you need company")
+    let button3 = TransportationView(image: UIImage.init(named: "image_walking"), name: "By walking", subName: "When you need company")
     
     self.stackView.addArrangedSubview(button1)
     self.stackView.addArrangedSubview(button2)

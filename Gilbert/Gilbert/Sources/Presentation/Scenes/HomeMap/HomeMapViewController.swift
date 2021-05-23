@@ -81,14 +81,14 @@ final class HomeMapViewController: BaseViewController, View {
     $0.height = CGFloat(NMF_MARKER_SIZE_AUTO)
     $0.iconImage = arrivalImage
   }
-  let arrivalImage: NMFOverlayImage = .init(image: .init(named: "image_arrival")!)
+  let arrivalImage: NMFOverlayImage = .init(image: UIImage.init(named: "image_arrival")!)
   
   lazy var departureMaker: NMFMarker = NMFMarker().then {
     $0.width = CGFloat(NMF_MARKER_SIZE_AUTO)
     $0.height = CGFloat(NMF_MARKER_SIZE_AUTO)
     $0.iconImage = departureImage
   }
-  let departureImage: NMFOverlayImage = .init(image: .init(named: "image_departure")!)
+  let departureImage: NMFOverlayImage = .init(image: UIImage.init(named: "image_departure")!)
   
   // MARK: Properties
   let locationManager: CLLocationManager = .init()
