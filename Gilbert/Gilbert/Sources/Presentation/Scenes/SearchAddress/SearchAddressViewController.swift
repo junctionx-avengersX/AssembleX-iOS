@@ -20,16 +20,15 @@ class SearchAddressViewController: BaseViewController {
     $0.clearButtonMode = .always
   }
   
-  private let destinationAddressTextField = UITextField().then {
+  private let destinationAddressTextField = LeftImageTextField().then {
     $0.layer.cornerRadius = 5
     $0.layer.borderWidth = 2
     $0.layer.borderColor = UIColor(rgb: "#f9f9f9").cgColor
     $0.clearButtonMode = .always
-    $0.leftViewMode = .always
-    let imageView = UIImageView(image: UIImage(named: "green_oval")).then({
-      $0.frame = CGRect(x: 20, y: 0, width: 100, height: 100)
-    })
-    $0.leftView = imageView
+//    $0.leftViewMode = .always
+//    let imageView = UIImageView(image: UIImage(named: "green_oval"))
+//    imageView.frame = CGRect(x: 20, y: 0, width: 100, height: 100)
+//    $0.leftView = imageView
   }
   
   private let backbuttonImageView = UIImageView().then {
@@ -40,7 +39,7 @@ class SearchAddressViewController: BaseViewController {
   private let currentLocationLabel = UILabel().then {
     $0.font = .font(weight: .regular, size: 16)
     $0.textColor = UIColor(rgb: "#030303")
-    $0.text = "Current Location : Ori homeplus"
+    $0.text = "Current Location"
   }
   
   lazy var collectionView = UICollectionView(
