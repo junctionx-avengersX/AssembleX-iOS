@@ -29,6 +29,15 @@ class MatchingResultViewController: BaseViewController {
     fatalError("init(coder:) has not been implemented")
   }
   
+  override func viewWillAppear(_ animated: Bool) {
+    super.viewWillAppear(animated)
+    /*let gilbert = Gilbert(id: "", name: "Ari Mande", profileUrl: "https://cdn.fakercloud.com/avatars/adhamdannaway_128.jpg", rating: 4, delay: 4.5, cost: 2000, introduction: "testtest", guideCount: 4)
+    self.gilbert = gilbert*/
+    if let gilbertInfo = gilbert {
+      smallCardView.configure(gilbertInfo: gilbertInfo)
+    }
+  }
+  
   private var popUpCardView: UIView?
   
   private let titleLabel = UILabel().then {
@@ -38,9 +47,11 @@ class MatchingResultViewController: BaseViewController {
     $0.text = "동행 완료!\n\n길벗과의 동행이 편안하셨나요?"
   }
   
+  private let smallCardView = GilbertSmallCardView()
+  
   private let imageView = UIImageView().then {
     $0.contentMode = .scaleAspectFit
-    $0.image = UIImage(named: "temp")
+    $0.image = UIImage(named: "temp6")
   }
   
   private let grayBottomFeeLabel = UIButton().then {
@@ -72,7 +83,8 @@ extension MatchingResultViewController {
       titleLabel,
       imageView,
       grayBottomFeeLabel,
-      bottomSendButton
+      bottomSendButton,
+      smallCardView
     )
     layout()
   }
@@ -84,8 +96,8 @@ extension MatchingResultViewController {
     }
     
     imageView.snp.makeConstraints {
-      $0.top.equalTo(titleLabel.snp.bottom).offset(40)
-      $0.height.equalTo(320)
+      $0.top.equalTo(smallCardView.snp.bottom).offset(55)
+      $0.height.equalTo(120)
       $0.leading.equalToSuperview().offset(40)
       $0.trailing.equalToSuperview().offset(-40)
     }
@@ -103,13 +115,23 @@ extension MatchingResultViewController {
       $0.trailing.equalToSuperview().offset(-24)
       $0.height.equalTo(32)
     }
+    
+    smallCardView.snp.makeConstraints {
+      $0.centerX.equalToSuperview()
+      $0.top.equalToSuperview().offset(170)
+      $0.width.equalTo(262)
+      $0.height.equalTo(82)
+    }
   }
   
   private func bindUI() {
     let gilbert = Gilbert(id: "", name: "Ari Mande", profileUrl: "", rating: 4, delay: 4.5, cost: 2000, introduction: "", guideCount: 4)
     
     bottomSendButton.rx.tap.bind { [weak self] _ in
-      self?.setupPopUpCardView(gilbertInfo: gilbert)
+      
+      if let gilbertInfo = self?.gilbert {
+        self?.setupPopUpCardView(gilbertInfo: gilbertInfo)
+      }
     }
     .disposed(by: disposeBag)
   }

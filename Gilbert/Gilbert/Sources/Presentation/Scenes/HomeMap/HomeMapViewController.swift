@@ -16,6 +16,16 @@ import ReactorKit
 final class HomeMapViewController: BaseViewController, View {
   
   // MARK: UI
+  private let sponsorBadge = UIImageView().then {
+    $0.contentMode = .scaleAspectFit
+    $0.image = UIImage(named: "bitmap")
+  }
+  
+  private let sponsorLabel = UILabel().then {
+    $0.font = .font(weight: .bold, size: 10)
+    $0.text = "Sponsor"
+  }
+  
   let naverMapView: NMFNaverMapView = .init()
   let timeFrameView: UIView = UIView().then {
     $0.backgroundColor = .white
@@ -80,14 +90,14 @@ final class HomeMapViewController: BaseViewController, View {
     $0.height = CGFloat(NMF_MARKER_SIZE_AUTO)
     $0.iconImage = arrivalImage
   }
-  let arrivalImage: NMFOverlayImage = .init(image: .init(named: "image_arrival")!)
+  let arrivalImage: NMFOverlayImage = .init(image: UIImage.init(named: "image_arrival")!)
   
   lazy var departureMaker: NMFMarker = NMFMarker().then {
     $0.width = CGFloat(NMF_MARKER_SIZE_AUTO)
     $0.height = CGFloat(NMF_MARKER_SIZE_AUTO)
     $0.iconImage = departureImage
   }
-  let departureImage: NMFOverlayImage = .init(image: .init(named: "image_departure")!)
+  let departureImage: NMFOverlayImage = .init(image: UIImage.init(named: "image_departure")!)
   
   lazy var gillbertMaker: NMFMarker = NMFMarker().then {
     $0.width = CGFloat(NMF_MARKER_SIZE_AUTO)
@@ -181,6 +191,17 @@ final class HomeMapViewController: BaseViewController, View {
       $0.centerY.equalToSuperview()
       $0.right.equalToSuperview().offset(-16)
     }
+    
+    sponsorBadge.snp.makeConstraints {
+      $0.top.equalTo(searchButton.snp.bottom).offset(16)
+      $0.trailing.equalToSuperview().offset(-15)
+      $0.width.height.equalTo(55)
+    }
+    
+    sponsorLabel.snp.makeConstraints {
+      $0.top.equalTo(sponsorBadge.snp.bottom).offset(-6)
+      $0.centerX.equalTo(sponsorBadge)
+    }
   }
   
   // MARK: Binding
@@ -194,6 +215,7 @@ final class HomeMapViewController: BaseViewController, View {
     naverMapView.showZoomControls = false
     naverMapView.mapView.contentInset = .init(top: 100, left: 60, bottom: 200, right: 60)
     view.addSubview(naverMapView)
+    view.addSubviews(sponsorBadge, sponsorLabel)
   }
   
   fileprivate func initializeLocation() {
