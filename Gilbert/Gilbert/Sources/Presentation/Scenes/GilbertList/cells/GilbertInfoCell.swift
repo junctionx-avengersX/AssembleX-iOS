@@ -194,6 +194,7 @@ extension GilbertInfoCell {
     descriptionLabel.snp.makeConstraints {
       $0.leading.equalTo(userNameBoldLabel)
       $0.top.equalTo(userNameBoldLabel.snp.bottom).offset(6)
+      $0.trailing.equalTo(userProfileImageView.snp.leading).offset(-10)
     }
     
     ratingStackView.snp.makeConstraints {
