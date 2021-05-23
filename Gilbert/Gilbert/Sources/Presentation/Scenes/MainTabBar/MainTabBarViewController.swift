@@ -59,7 +59,6 @@ class MainTabBarViewController : UITabBarController {
       let navigator = GilbertListNavigator(presenter: navigationController)
       let serviceProvider = ServiceProvider()
       let viewModel = GilbertListViewModel(
-        navigator: navigator,
         provider: serviceProvider, gilbertInfoPublishRelay: PublishRelay<Gilbert>()
       )
       let gilbertListViewController = GilbertListViewController(viewModel: viewModel)

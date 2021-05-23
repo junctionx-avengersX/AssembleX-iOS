@@ -56,6 +56,11 @@ class GilbertListViewController: BaseViewController {
     navigationController?.setNavigationBarHidden(true, animated: false)
   }
   
+  override func viewWillAppear(_ animated: Bool) {
+    super.viewWillAppear(animated)
+    self.navigationController?.setNavigationBarHidden(true, animated: animated)
+  }
+  
   private func bindViewModel() {
     let viewWillAppear = rx.viewWillAppear.asObservable().map { _ in }
     
@@ -107,7 +112,7 @@ class GilbertListViewController: BaseViewController {
     guard popUpCardView == nil else { return }
     
     let backgroundView = UIView().then {
-      $0.backgroundColor = UIColor(rgb: "#6b6b6b")
+      $0.backgroundColor = UIColor.init(white: 0, alpha: 0.5)
     }
     
     let cardView = GilbertDetailInfoCardView().then {
