@@ -103,6 +103,8 @@ final class HomeMapViewController: BaseViewController, View {
   
   var arrivalPosition: NMGLatLng?
   
+  var polylines: [NMFPolylineOverlay] = .init()
+  
   // MARK: Initializing
   init(reactor: HomeMapReactor) {
     defer { self.reactor = reactor }
@@ -298,6 +300,8 @@ extension HomeMapViewController {
     
     
     reactor.state.map { $0.driving }
+      .filter { $0 != nil }
+      .take(1)
       .asObservable()
       .bind(onNext: { [weak self] driving in
         guard
@@ -314,10 +318,13 @@ extension HomeMapViewController {
           for b in t.path {
             positions.append(.init(lat: b.last ?? 0, lng: b.first ?? 0))
           }
-          let polyline = NMFPolylineOverlay(positions)
-          polyline?.joinType = .round
-          polyline?.capType = .round
-          polyline?.mapView = self.naverMapView.mapView
+          if let polyline = NMFPolylineOverlay(positions) {
+            polyline.joinType = .round
+            polyline.capType = .round
+            polyline.mapView = self.naverMapView.mapView
+            
+            self.polylines.append(polyline)
+          }
         }
         
         self.naverMapView.mapView.moveCamera(.init(fit: .init(southWest: firstPosition, northEast: arrivalPosition)))
@@ -327,7 +334,30 @@ extension HomeMapViewController {
         
         let viewController = RouteModalViewController()
         viewController.modalPresentationStyle = .custom
+        
+        viewController.completionHandler = { [weak self] in
+          self?.reactor?.action.on(.next(Reactor.Action.readyForGillbert))
+        }
+        
         self.present(viewController, animated: true, completion: nil)
+      })
+      .disposed(by: self.disposeBag)
+    
+    reactor.state.map { $0.isReadyForGillbert }
+      .filter{ $0 }
+      .take(1)
+      .distinctUntilChanged()
+      .asObservable()
+      .bind(onNext: { [weak self] isReadyForGillbert in
+        if isReadyForGillbert {
+          let viewModel = GilbertListViewModel(
+            provider: ServiceProvider(),
+            gilbertInfoPublishRelay: PublishRelay<Gilbert>()
+          )
+          let gilbertListViewController = GilbertListViewController(viewModel: viewModel)
+          gilbertListViewController.hidesBottomBarWhenPushed = true
+          self?.navigationController?.pushViewController(gilbertListViewController, animated: true)
+        }
       })
       .disposed(by: self.disposeBag)
   }

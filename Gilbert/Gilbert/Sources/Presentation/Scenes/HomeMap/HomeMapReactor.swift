@@ -15,18 +15,21 @@ final class HomeMapReactor: Reactor {
     case reservationTime(Date?)
     case findAddressInfo(AddressDetailInfo?)
     case readyForFindRoute(MapPosition, MapPosition)
+    case readyForGillbert
   }
   
   enum Mutation {
     case setReservationTime(Date?)
     case setAddressInfo(AddressDetailInfo?)
     case setDriving(Driving)
+    case setReadyForGillbert
   }
   
   struct State {
     var reservationTime: Date?
     var addressInfo: AddressDetailInfo?
     var driving: Driving?
+    var isReadyForGillbert: Bool = false
   }
   
   let initialState: State
@@ -48,7 +51,8 @@ final class HomeMapReactor: Reactor {
       return self.provider.drivingService.getDriving(start: start, goal: goal)
         .asObservable()
         .map { Mutation.setDriving($0) }
-        .debug()
+    case .readyForGillbert:
+      return .just(Mutation.setReadyForGillbert)
     }
   }
   
@@ -61,6 +65,8 @@ final class HomeMapReactor: Reactor {
       state.addressInfo = addressInfo
     case let .setDriving(driving):
       state.driving = driving
+    case .setReadyForGillbert:
+      state.isReadyForGillbert = true
     }
     return state
   }

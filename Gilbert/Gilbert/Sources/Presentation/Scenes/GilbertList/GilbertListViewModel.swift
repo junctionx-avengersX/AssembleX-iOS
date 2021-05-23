@@ -10,18 +10,15 @@ import RxCocoa
 
 class GilbertListViewModel {
   
-  private let navigator: GilbertListNavigator
   private let provider: ServiceProvider
   private let disposeBag = DisposeBag()
   
   var gilbertInfoPublishRelay = PublishRelay<Gilbert>()
   
   init(
-    navigator: GilbertListNavigator,
     provider: ServiceProvider,
     gilbertInfoPublishRelay: PublishRelay<Gilbert>
   ) {
-    self.navigator = navigator
     self.provider = provider
     self.gilbertInfoPublishRelay = gilbertInfoPublishRelay
   }
