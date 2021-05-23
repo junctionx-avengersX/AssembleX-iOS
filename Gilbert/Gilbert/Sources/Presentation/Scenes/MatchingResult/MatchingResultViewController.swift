@@ -109,7 +109,10 @@ extension MatchingResultViewController {
     let gilbert = Gilbert(id: "", name: "Ari Mande", profileUrl: "", rating: 4, delay: 4.5, cost: 2000, introduction: "", guideCount: 4)
     
     bottomSendButton.rx.tap.bind { [weak self] _ in
-      self?.setupPopUpCardView(gilbertInfo: gilbert)
+      
+      if let gilbertInfo = self?.gilbert {
+        self?.setupPopUpCardView(gilbertInfo: gilbertInfo)
+      }
     }
     .disposed(by: disposeBag)
   }
