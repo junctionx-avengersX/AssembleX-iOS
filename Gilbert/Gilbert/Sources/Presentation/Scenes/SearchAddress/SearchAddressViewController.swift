@@ -20,7 +20,7 @@ class SearchAddressViewController: BaseViewController {
     $0.clearButtonMode = .always
   }
   
-  private let destinationAddressTextField = LeftImageTextField().then {
+  private let destinationAddressTextField = UITextField().then {
     $0.layer.cornerRadius = 5
     $0.layer.borderWidth = 2
     $0.layer.borderColor = UIColor(rgb: "#f9f9f9").cgColor

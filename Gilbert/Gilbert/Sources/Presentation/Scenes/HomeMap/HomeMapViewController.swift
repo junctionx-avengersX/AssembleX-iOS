@@ -72,7 +72,7 @@ final class HomeMapViewController: BaseViewController, View {
     $0.width = CGFloat(NMF_MARKER_SIZE_AUTO)
     $0.height = CGFloat(NMF_MARKER_SIZE_AUTO)
     $0.zIndex = -10
-    $0.anchor = .init(x: 0, y: 20)
+    $0.anchor = .init(x: -20, y: -20)
   }
   let currentMarker: NMFOverlayImage = .init(image: UIImage(named: "image_marker")!)
   
