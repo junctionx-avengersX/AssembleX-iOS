@@ -79,15 +79,16 @@ class MainTabBarViewController : UITabBarController {
       let searchAddressViewController = SearchAddressViewController(viewModel: viewModel)
       searchAddressViewController.tabBarItem = UITabBarItem(
         title: "Notification",
-        image: UIImage(named: ""),
+        image: UIImage(named: "notification_img"),
         selectedImage: nil
       )
       return searchAddressViewController
     case .mypage:
-      let matchingResultViewController = MatchingResultViewController()
+      let viewModel = MatchingResultViewModel()
+      let matchingResultViewController = MatchingResultViewController(viewModel: viewModel)
       matchingResultViewController.tabBarItem = UITabBarItem(
         title: "My Page",
-        image: UIImage(named: ""),
+        image: UIImage(named: "myinfo_img"),
         selectedImage: nil
       )
       return matchingResultViewController
