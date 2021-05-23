@@ -18,6 +18,7 @@ class GilbertListViewController: BaseViewController {
   init(viewModel: GilbertListViewModel) {
     self.viewModel = viewModel
     super.init()
+    
   }
   
   required init?(coder: NSCoder) {
@@ -52,6 +53,7 @@ class GilbertListViewController: BaseViewController {
     super.viewDidLoad()
     setupUI()
     bindViewModel()
+    navigationController?.setNavigationBarHidden(true, animated: false)
   }
   
   private func bindViewModel() {

@@ -101,7 +101,7 @@ class GilbertInfoCell: BaseCollectionViewCell {
     }
     
     if let fee = gilbertInfo.cost {
-      feeInfoLabel.setTitle(" Escort Fee: \(fee)원", for: .normal)
+      feeInfoLabel.setTitle(" Escort Fee: \(fee) won", for: .normal)
     }
     
     if let rating = gilbertInfo.rating {

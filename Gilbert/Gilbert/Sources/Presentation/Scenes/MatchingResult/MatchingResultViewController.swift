@@ -9,6 +9,26 @@ import UIKit
 
 class MatchingResultViewController: BaseViewController {
   
+  var viewModel: MatchingResultViewModel
+  
+  var gilbert: Gilbert?
+  
+  // MARK: - Con(De)structor
+  
+  init(viewModel: MatchingResultViewModel) {
+    self.viewModel = viewModel
+    super.init()
+  }
+  
+  convenience init(gilbert: Gilbert, viewModel: MatchingResultViewModel) {
+    self.init(viewModel: viewModel)
+    self.gilbert = gilbert
+  }
+  
+  required init?(coder: NSCoder) {
+    fatalError("init(coder:) has not been implemented")
+  }
+  
   private var popUpCardView: UIView?
   
   private let titleLabel = UILabel().then {
@@ -40,6 +60,7 @@ class MatchingResultViewController: BaseViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
     setupUI()
+    bindUI()
   }
 }
 
@@ -84,6 +105,15 @@ extension MatchingResultViewController {
     }
   }
   
+  private func bindUI() {
+    let gilbert = Gilbert(id: "", name: "Ari Mande", profileUrl: "", rating: 4, delay: 4.5, cost: 2000, introduction: "", guideCount: 4)
+    
+    bottomSendButton.rx.tap.bind { [weak self] _ in
+      self?.setupPopUpCardView(gilbertInfo: gilbert)
+    }
+    .disposed(by: disposeBag)
+  }
+  
   private func setupPopUpCardView(gilbertInfo: Gilbert) {
     guard popUpCardView == nil else { return }
     
@@ -123,5 +153,13 @@ extension MatchingResultViewController {
       $0.bottom.equalTo(cardView.snp.top).offset(-10)
       $0.trailing.equalTo(cardView)
     }
+    
+    
+    dismissButton.rx.tap
+      .bind { [weak self] _ in
+        self?.popUpCardView?.removeFromSuperview()
+        self?.popUpCardView = nil
+      }
+      .disposed(by: disposeBag)
   }
 }

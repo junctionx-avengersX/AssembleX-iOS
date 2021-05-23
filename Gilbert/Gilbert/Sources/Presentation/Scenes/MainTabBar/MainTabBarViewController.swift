@@ -84,7 +84,8 @@ class MainTabBarViewController : UITabBarController {
       )
       return searchAddressViewController
     case .mypage:
-      let matchingResultViewController = MatchingResultViewController()
+      let viewModel = MatchingResultViewModel()
+      let matchingResultViewController = MatchingResultViewController(viewModel: viewModel)
       matchingResultViewController.tabBarItem = UITabBarItem(
         title: "My Page",
         image: UIImage(named: "icon_account"),

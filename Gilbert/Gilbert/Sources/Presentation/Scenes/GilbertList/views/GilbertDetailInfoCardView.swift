@@ -22,7 +22,7 @@ class GilbertDetailInfoCardView: UIView {
   private let checkMarkImageView = UIImageView()
   
   private let bottomGrayBackgroundView = UIImageView().then {
-    $0.image = UIImage(named: "temp2")
+    $0.image = UIImage(named: "temp4")
     $0.contentMode = .scaleAspectFit
   }
   

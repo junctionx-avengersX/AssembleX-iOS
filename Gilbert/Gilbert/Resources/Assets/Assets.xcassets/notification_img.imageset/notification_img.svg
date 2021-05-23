@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+    <defs>
+        <filter id="ph062fosha">
+            <feColorMatrix in="SourceGraphic" values="0 0 0 0 0.678431 0 0 0 0 0.709804 0 0 0 0 0.741176 0 0 0 1.000000 0"/>
+        </filter>
+        <filter id="rkmqbas25b">
+            <feColorMatrix in="SourceGraphic" values="0 0 0 0 0.847000 0 0 0 0 0.847000 0 0 0 0 0.847000 0 0 0 1.000000 0"/>
+        </filter>
+    </defs>
+    <g fill="none" fill-rule="evenodd">
+        <g>
+            <g filter="url(#ph062fosha)" transform="translate(-222 -599) translate(0 590)">
+                <g>
+                    <g filter="url(#rkmqbas25b)" transform="translate(222 9)">
+                        <g>
+                            <path fill="#000" fill-rule="nonzero" d="M16 11.586V8c0-3.217-2.185-5.927-5.145-6.742C10.562.52 9.846 0 9 0c-.846 0-1.562.52-1.855 1.258C4.185 2.074 2 4.783 2 8v3.586L.293 13.293C.105 13.48 0 13.734 0 14v2c0 .553.447 1 1 1h16c.553 0 1-.447 1-1v-2c0-.266-.105-.52-.293-.707L16 11.586zM16 15H2v-.586l1.707-1.707C3.895 12.52 4 12.266 4 12V8c0-2.757 2.243-5 5-5s5 2.243 5 5v4c0 .266.105.52.293.707L16 14.414V15zm-7 5c1.311 0 2.407-.834 2.818-2H6.182c.411 1.166 1.507 2 2.818 2z" transform="translate(3 2)"/>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>
