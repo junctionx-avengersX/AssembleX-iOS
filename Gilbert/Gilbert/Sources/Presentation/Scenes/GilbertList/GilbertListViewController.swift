@@ -160,6 +160,7 @@ class GilbertListViewController: BaseViewController {
       self?.viewModel.gilbertInfoPublishRelay.accept(gilbertInfo)
       self?.popUpCardView?.removeFromSuperview()
       self?.popUpCardView = nil
+      self?.navigationController?.popViewController(animated: true)
       // self?.dismiss(animated: true, completion: nil)
     }
     .disposed(by: disposeBag)

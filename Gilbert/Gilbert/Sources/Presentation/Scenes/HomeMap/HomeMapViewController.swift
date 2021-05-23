@@ -72,7 +72,6 @@ final class HomeMapViewController: BaseViewController, View {
     $0.width = CGFloat(NMF_MARKER_SIZE_AUTO)
     $0.height = CGFloat(NMF_MARKER_SIZE_AUTO)
     $0.zIndex = -10
-    $0.anchor = .init(x: -20, y: -20)
   }
   let currentMarker: NMFOverlayImage = .init(image: UIImage(named: "image_marker")!)
   
@@ -90,8 +89,18 @@ final class HomeMapViewController: BaseViewController, View {
   }
   let departureImage: NMFOverlayImage = .init(image: .init(named: "image_departure")!)
   
+  lazy var gillbertMaker: NMFMarker = NMFMarker().then {
+    $0.width = CGFloat(NMF_MARKER_SIZE_AUTO)
+    $0.height = CGFloat(NMF_MARKER_SIZE_AUTO)
+    $0.iconImage = gillbertImage
+  }
+  let gillbertImage: NMFOverlayImage = .init(image: .init(named: "image_pro")!)
+  
   // MARK: Properties
   let locationManager: CLLocationManager = .init()
+  
+  var isOpenedRoute: Bool = false
+  var isOpenedCall: Bool = false
   
   var firstPosition: NMGLatLng? {
     didSet {
@@ -100,6 +109,9 @@ final class HomeMapViewController: BaseViewController, View {
       }
     }
   }
+  var gillbertPosition: NMGLatLng?
+  
+  var gilbert: Gilbert?
   
   var arrivalPosition: NMGLatLng?
   
@@ -241,7 +253,8 @@ extension HomeMapViewController {
           let addressInfo = self?.reactor?.currentState.addressInfo,
           let time = self?.reactor?.currentState.reservationTime,
           let firstPosition = self?.firstPosition,
-          let arrivalPosition = self?.arrivalPosition
+          let arrivalPosition = self?.arrivalPosition,
+          !(self?.isOpenedRoute ?? true)
         {
           let viewController = ReservationModalViewController(time: time, addressInfo: addressInfo)
           viewController.modalPresentationStyle = .custom
@@ -249,6 +262,42 @@ extension HomeMapViewController {
             self?.reactor?.action.on(.next(Reactor.Action.readyForFindRoute(.init(firstPosition.lat, firstPosition.lng), .init(arrivalPosition.lat, arrivalPosition.lng))))
           }
           self?.present(viewController, animated: true, completion: nil)
+          self?.isOpenedRoute = true
+        }
+      })
+      .disposed(by: self.disposeBag)
+    
+    self.rx.viewDidAppear.asObservable()
+      .bind(onNext: { [weak self] _ in
+        if reactor.currentState.isReadyForCall,
+           !(self?.isOpenedCall ?? true)
+        {
+          self?.arrivalMaker.mapView = nil
+          self?.departureMaker.mapView = nil
+          self?.polylines.forEach { $0.mapView = nil }
+          
+          let currentMarker: NMFOverlayImage = .init(image: UIImage(named: "image_me")!)
+          self?.marker.iconImage = currentMarker
+          
+          if let gillbertPosition = self?.gillbertPosition,
+             let firstPosition = self?.firstPosition {
+            
+            self?.gillbertMaker.position = gillbertPosition
+            self?.gillbertMaker.mapView = self?.naverMapView.mapView
+            
+            self?.naverMapView.mapView.moveCamera(.init(fit: .init(southWest: firstPosition, northEast: gillbertPosition)))
+          }
+          
+          let viewController = CallModalViewController()
+          viewController.modalPresentationStyle = .custom
+
+          viewController.completionHandler = { [weak self] in
+            
+            
+          }
+
+          self?.present(viewController, animated: true, completion: nil)
+          self?.isOpenedCall = true
         }
       })
       .disposed(by: self.disposeBag)
@@ -349,6 +398,7 @@ extension HomeMapViewController {
       .distinctUntilChanged()
       .asObservable()
       .bind(onNext: { [weak self] isReadyForGillbert in
+        guard let self = self else { return }
         if isReadyForGillbert {
           let viewModel = GilbertListViewModel(
             provider: ServiceProvider(),
@@ -356,10 +406,19 @@ extension HomeMapViewController {
           )
           let gilbertListViewController = GilbertListViewController(viewModel: viewModel)
           gilbertListViewController.hidesBottomBarWhenPushed = true
-          self?.navigationController?.pushViewController(gilbertListViewController, animated: true)
+          
+          viewModel.gilbertInfoPublishRelay.asObservable()
+            .subscribe(onNext: { [weak self] gilbert in
+              self?.gilbert = gilbert
+              self?.reactor?.action.on(.next(Reactor.Action.readyForCall))
+            })
+            .disposed(by: self.disposeBag)
+          
+          self.navigationController?.pushViewController(gilbertListViewController, animated: true)
         }
       })
       .disposed(by: self.disposeBag)
+      
   }
 }
 
@@ -370,6 +429,8 @@ extension HomeMapViewController: CLLocationManagerDelegate {
     if let location = locations.first {
       if let location = locations.first {
         let position: NMGLatLng = .init(lat: location.coordinate.latitude, lng: location.coordinate.longitude)
+        
+        self.gillbertPosition = NMGLatLng.init(lat: location.coordinate.latitude + 0.00001, lng: location.coordinate.longitude + 0.00002)
         marker.position = position
         marker.mapView = self.naverMapView.mapView
         if self.firstPosition == nil {

@@ -16,6 +16,7 @@ final class HomeMapReactor: Reactor {
     case findAddressInfo(AddressDetailInfo?)
     case readyForFindRoute(MapPosition, MapPosition)
     case readyForGillbert
+    case readyForCall
   }
   
   enum Mutation {
@@ -23,6 +24,7 @@ final class HomeMapReactor: Reactor {
     case setAddressInfo(AddressDetailInfo?)
     case setDriving(Driving)
     case setReadyForGillbert
+    case setReadyForCall
   }
   
   struct State {
@@ -30,6 +32,7 @@ final class HomeMapReactor: Reactor {
     var addressInfo: AddressDetailInfo?
     var driving: Driving?
     var isReadyForGillbert: Bool = false
+    var isReadyForCall: Bool = false
   }
   
   let initialState: State
@@ -53,6 +56,8 @@ final class HomeMapReactor: Reactor {
         .map { Mutation.setDriving($0) }
     case .readyForGillbert:
       return .just(Mutation.setReadyForGillbert)
+    case .readyForCall:
+      return .just(Mutation.setReadyForCall)
     }
   }
   
@@ -67,6 +72,8 @@ final class HomeMapReactor: Reactor {
       state.driving = driving
     case .setReadyForGillbert:
       state.isReadyForGillbert = true
+    case .setReadyForCall:
+      state.isReadyForCall = true
     }
     return state
   }
